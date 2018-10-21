@@ -8,11 +8,13 @@ const statsController = (() => {
   };
 
   function _checkPoints() {
-
+    return !!(points >= 3);
   }
 
   function _checkCurrentLevel() {
-
+    if (_checkPoints()) {
+      _incrementLevel();
+    }
   }
 
   function _incrementLevel() {
@@ -48,7 +50,7 @@ const statsController = (() => {
   };
 
   function checkScore() {
-    if ()
+    
   }
 
 
