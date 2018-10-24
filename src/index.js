@@ -5,9 +5,9 @@ const airplane = document.querySelector('#airplane');
 console.log('loaded');
 
 const airplaneController = (() => {
-  airplane.addEventListener('endGame', () => {
-    stats.incrementLevel();
-    console.log('received event', stats.getStats());
+  airplane.addEventListener('endGame', (e) => {
+    stats.checkScore();
+    console.log('received event', e);
   });
   const randomLandingPadGenerator = (val) => {
     const island = document.createElement('div');

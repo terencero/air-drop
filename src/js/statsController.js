@@ -5,20 +5,24 @@ const statsController = (() => {
     parachutes: 5, // make this an array of parachutes?
     points: 0,
     level: 1,
+    levelIncreaseFlag: false,
   };
 
   function _checkPoints() {
-    return !!(points >= 3);
+    return !!(stats.points >= 3);
   }
 
   function _checkCurrentLevel() {
-    if (_checkPoints()) {
-      _incrementLevel();
-    }
+    return _checkPoints() ? _incrementLevel() : false;
   }
 
   function _incrementLevel() {
-    stats.level+=1;
+    if (stats.levelIncreaseFlag === false) {
+      stats.level+=1;
+      stats.levelIncreaseFlag = true;
+      return true;
+    }
+    return false;
   };
 
   function getStats() {
@@ -50,7 +54,8 @@ const statsController = (() => {
   };
 
   function checkScore() {
-    
+    _checkCurrentLevel();
+    console.log('check level', stats);
   }
 
 
@@ -61,7 +66,7 @@ const statsController = (() => {
     addParachutes,
     incrementPosition,
     decrementParachute,
-    incrementLevel,
+    checkScore,
   };
 })();
 

@@ -43,12 +43,10 @@ const parachuteController = (() => {
     if (stats.level === 5) {
       // stats
     }
-    document.querySelector('#airplane').addEventListener('endGame', (e) => console.log('received', e));
     if (stats.getStats().parachutes > 0) {
       if (e.keyCode === 32) {
         document.querySelector('.air-lane').appendChild(createParachute());
         stats.decrementParachute();
-        // console.log('minus parachute', stats.getStats());
       }
     } else {
       // need to reset or freeze game
