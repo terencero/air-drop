@@ -25,6 +25,10 @@ const statsController = (() => {
     return false;
   };
 
+  function _setNextLevel() {
+
+  };
+
   function getStats() {
     return stats;
   };
@@ -41,10 +45,6 @@ const statsController = (() => {
     }, {});
   };
 
-  function addParachutes(parachute) {
-    stats.parachutes.push(parachute);
-  };
-
   function incrementPosition(value) {
     stats.pos+=value;
   };
@@ -58,12 +58,14 @@ const statsController = (() => {
     console.log('check level', stats);
   }
 
+  function resetGame() {
+
+  };
 
   return {
     getStats,
     incrementPoints,
     addIsland,
-    addParachutes,
     incrementPosition,
     decrementParachute,
     checkScore,
