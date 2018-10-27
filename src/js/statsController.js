@@ -10,6 +10,7 @@ const statsController = (() => {
       incrementPoints: _incrementPoints,
       // _decrementPoints,
       incrementLevel: _incrementLevel,
+      decrementParachute: _decrementParachute,
     },
   };
 
@@ -73,8 +74,8 @@ const statsController = (() => {
     stats.pos+=value;
   };
 
-  function decrementParachute() {
-    stats.parachutes-=1;
+  function _decrementParachute(payload = 1) {
+    stats.parachutes-=payload;
   };
 
   function checkScore() {
@@ -95,7 +96,6 @@ const statsController = (() => {
     getStats,
     addIsland,
     incrementPosition,
-    decrementParachute,
     checkScore,
     updateStats,
     initStatsBoard,

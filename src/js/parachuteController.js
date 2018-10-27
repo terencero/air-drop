@@ -10,25 +10,22 @@ const parachuteController = (() => {
     parachute.style.position = 'absolute';
     parachute.style.right = airplane.style.right;
     parachute.style.top = `50px`;
-    parachuteTracker({parachute}, 10);
+    parachuteTracker(parachute, 10);
     
     return parachute;
   };
   
-  function parachuteTracker({parachute}, interval) {
+  function parachuteTracker(parachute, interval) {
     let localPos = parseInt(parachute.style.top);
 
     const parachuteInterval = setInterval(() => {
       const boundaries = parachute.getBoundingClientRect()
       if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
         console.log('detect sea',stats.getStats());
-        // stats.checkScore();
         return stopTracker();
       } else if (touchDetector(boundaries).type === 'island' && touchDetector(boundaries).value === true) {
-        // stats.incrementPoints(1);
         stats.updateStats({type: `incrementPoints`, payload: 1});
         console.log('detect island', stats.getStats());
-        // stats.checkScore();
         return stopTracker();
       }
       localPos+=1
@@ -48,7 +45,7 @@ const parachuteController = (() => {
     if (stats.getStats().parachutes > 0) {
       if (e.keyCode === 32) {
         document.querySelector('.air-lane').appendChild(createParachute());
-        stats.decrementParachute();
+        stats.updateStats({type: `decrementParachute`});
       }
     } else {
       // need to reset or freeze game
