@@ -52,12 +52,13 @@ const statsController = (() => {
   };
 
   function initStatsBoard() {
-
+    _displayPoints();
+    _displayLevel();
   };
 
   function _incrementPoints(value) {
     stats.points+=value;
-    _displayPoints();
+    _checkCurrentLevel();
   };
 
   function addIsland(randomIslands = [{}]) {
@@ -83,6 +84,7 @@ const statsController = (() => {
 
   function updateStats({type, payload}) {
     stats.statsActions[type] ? stats.statsActions[type](payload) : 'action not found';
+    _displayPoints();
   }
 
   function resetGame() {
@@ -96,6 +98,7 @@ const statsController = (() => {
     decrementParachute,
     checkScore,
     updateStats,
+    initStatsBoard,
   };
 })();
 

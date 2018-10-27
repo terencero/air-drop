@@ -22,13 +22,13 @@ const parachuteController = (() => {
       const boundaries = parachute.getBoundingClientRect()
       if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
         console.log('detect sea',stats.getStats());
-        stats.checkScore();
+        // stats.checkScore();
         return stopTracker();
       } else if (touchDetector(boundaries).type === 'island' && touchDetector(boundaries).value === true) {
         // stats.incrementPoints(1);
         stats.updateStats({type: `incrementPoints`, payload: 1});
         console.log('detect island', stats.getStats());
-        stats.checkScore();
+        // stats.checkScore();
         return stopTracker();
       }
       localPos+=1

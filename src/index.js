@@ -65,6 +65,7 @@ const airplaneController = (() => {
       console.log('clicked');
       moveAirplane();
       document.querySelector('button').blur();
+      stats.initStatsBoard();
     });
   })();
   
