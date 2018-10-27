@@ -6,6 +6,11 @@ const statsController = (() => {
     points: 0,
     level: 1,
     levelIncreaseFlag: false,
+    statsActions: {
+      incrementPoints: _incrementPoints,
+      // _decrementPoints,
+      incrementLevel: _incrementLevel,
+    },
   };
 
   function _checkPoints() {
@@ -17,7 +22,7 @@ const statsController = (() => {
   }
   
   function _incrementLevel() {
-    if (stats.levelIncreaseFlag === false) {
+    if (!stats.levelIncreaseFlag) {
       stats.level+=1;
       stats.levelIncreaseFlag = true;
       _displayLevel();
@@ -77,9 +82,7 @@ const statsController = (() => {
   }
 
   function updateStats({type, payload}) {
-    if (type === 'incrementPoints') {
-      _incrementPoints(payload);
-    }
+    stats.statsActions[type] ? stats.statsActions[type](payload) : 'action not found';
   }
 
   function resetGame() {
