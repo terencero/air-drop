@@ -1,3 +1,5 @@
+import board from './statsBoardController';
+
 const statsController = (() => {
   const stats = {
     pos: 0,
@@ -26,45 +28,32 @@ const statsController = (() => {
     stats.points+=value;
     _checkCurrentLevel();
   };
+
+  function _decrementParachute(payload = 1) {
+    stats.parachutes-=payload;
+  };
   
   function _incrementLevel() {
     if (!stats.levelIncreaseFlag) {
       stats.level+=1;
       stats.levelIncreaseFlag = true;
-      _displayLevel();
-      _displayGameMessage();
+      board.displayGameMessage();
+      _setNextLevel();
       return true;
     }
     return false;
   };
   
-  function _displayPoints() {
-    document.querySelector('.points-container').innerHTML = `points: ${stats.points}`;
-  };
-  
-  function _displayLevel() {
-    document.querySelector('.level-container').innerHTML = `level: ${stats.level}`;
-  };
-
-  function _displayGameMessage() {
-    const successMessage = `Congrats! You've made it to the next level!`;
-    const failureMessage = `Too bad... Maybe next time. Restart the game? Don't be a quitter!`
-    let message = ``;
-    let modal = document.createElement(`div`);
-    modal.setAttribute(`class`, `message-modal`);
-    modal.style.position = `fixed`;
-    if (stats.levelIncreaseFlag) {
-      message = document.createTextNode(successMessage);
-      modal.appendChild(message);
-      document.querySelector('.layout').appendChild(modal);
-    }
-  }
-  
-  function _displayUserName() {
-    
-  };
-  
   function _setNextLevel() {
+    const nextLevel = new Event('nextLevel');
+    if (stats.levelIncreaseFlag) {
+      document.querySelector('#airplane').dispatchEvent(nextLevel);
+      stats.pos = 0;
+      stats.islands = {};
+      stats.parachutes = 5;
+      stats.points = 0;
+      stats.levelIncreaseFlag = false;
+    }
     return _checkPoints() ? _incrementLevel() : false;
   };
 
@@ -73,8 +62,7 @@ const statsController = (() => {
   };
 
   function initStatsBoard() {
-    _displayPoints();
-    _displayLevel();
+    board.updateBoard();
   };
 
   function addIsland(randomIslands = [{}]) {
@@ -89,10 +77,6 @@ const statsController = (() => {
     stats.pos+=value;
   };
 
-  function _decrementParachute(payload = 1) {
-    stats.parachutes-=payload;
-  };
-
   function checkScore() {
     _checkCurrentLevel();
     console.log('check level', stats);
@@ -100,7 +84,7 @@ const statsController = (() => {
 
   function updateStats({type, payload}) {
     stats.statsActions[type] ? stats.statsActions[type](payload) : 'action not found';
-    _displayPoints();
+    board.updateBoard();
   }
 
   function resetGame() {
