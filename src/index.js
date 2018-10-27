@@ -44,7 +44,7 @@ const airplaneController = (() => {
         value: randomLandingPadGenerator('c').getBoundingClientRect(),
       },
     ]);
-    parachuteController;
+    parachuteController();
     const airPlanePath = setInterval(() => {
       if (stats.getStats().pos > layout.offsetWidth) {
         stopTracker();

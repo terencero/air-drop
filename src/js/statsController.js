@@ -21,12 +21,18 @@ const statsController = (() => {
   function _checkCurrentLevel() {
     return _checkPoints() ? _incrementLevel() : false;
   }
+
+  function _incrementPoints(value) {
+    stats.points+=value;
+    _checkCurrentLevel();
+  };
   
   function _incrementLevel() {
     if (!stats.levelIncreaseFlag) {
       stats.level+=1;
       stats.levelIncreaseFlag = true;
       _displayLevel();
+      _displayGameMessage();
       return true;
     }
     return false;
@@ -39,6 +45,20 @@ const statsController = (() => {
   function _displayLevel() {
     document.querySelector('.level-container').innerHTML = `level: ${stats.level}`;
   };
+
+  function _displayGameMessage() {
+    const successMessage = `Congrats! You've made it to the next level!`;
+    const failureMessage = `Too bad... Maybe next time. Restart the game? Don't be a quitter!`
+    let message = ``;
+    let modal = document.createElement(`div`);
+    modal.setAttribute(`class`, `message-modal`);
+    modal.style.position = `fixed`;
+    if (stats.levelIncreaseFlag) {
+      message = document.createTextNode(successMessage);
+      modal.appendChild(message);
+      document.querySelector('.layout').appendChild(modal);
+    }
+  }
   
   function _displayUserName() {
     
@@ -55,11 +75,6 @@ const statsController = (() => {
   function initStatsBoard() {
     _displayPoints();
     _displayLevel();
-  };
-
-  function _incrementPoints(value) {
-    stats.points+=value;
-    _checkCurrentLevel();
   };
 
   function addIsland(randomIslands = [{}]) {

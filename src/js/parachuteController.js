@@ -1,6 +1,7 @@
 import stats from './statsController.js';
+import {touchDetector} from './helpers';
 
-const parachuteController = (() => {
+function parachuteController() {
   function createParachute() {
     let parachute = document.createElement('div');
     parachute.className = 'para1';
@@ -54,28 +55,6 @@ const parachuteController = (() => {
       console.log('no more parachutes');
     }
   }
-  
-  function touchDetector (/* [islands],  */parachute) {
-    const sea = document.querySelector('.sea');
-    const {islands} = stats.getStats();
-    function landedOnIsland() {
-      return  Object.keys(stats.getStats().islands).some(island => {
-        return (parachute.bottom === islands[island].top) &&
-        (parachute.right >= islands[island].left) &&
-        (parachute.left <= islands[island].right);
-      });
-    }
-    if (parachute.bottom === sea.getBoundingClientRect().top) {
-      return {
-        type: 'sea',
-        value: true,
-      };
-    }
-    return {
-      type: 'island',
-      value: landedOnIsland(),
-    }  
-  };
-})();
+};
 
 export default parachuteController;
