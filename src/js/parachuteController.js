@@ -17,6 +17,7 @@ const parachuteController = (() => {
   
   function parachuteTracker({parachute}, interval) {
     let localPos = parseInt(parachute.style.top);
+
     const parachuteInterval = setInterval(() => {
       const boundaries = parachute.getBoundingClientRect()
       if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
@@ -24,14 +25,16 @@ const parachuteController = (() => {
         stats.checkScore();
         return stopTracker();
       } else if (touchDetector(boundaries).type === 'island' && touchDetector(boundaries).value === true) {
-        stats.incrementPoints(1);
+        // stats.incrementPoints(1);
+        stats.updateStats({type: `incrementPoints`, payload: 1});
         console.log('detect island', stats.getStats());
         stats.checkScore();
         return stopTracker();
       }
       localPos+=1
       parachute.style.top = `${localPos}px`;
-    }, interval)
+    }, interval);
+
     function stopTracker() {
       return clearInterval(parachuteInterval);
     };

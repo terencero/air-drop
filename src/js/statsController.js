@@ -15,26 +15,44 @@ const statsController = (() => {
   function _checkCurrentLevel() {
     return _checkPoints() ? _incrementLevel() : false;
   }
-
+  
   function _incrementLevel() {
     if (stats.levelIncreaseFlag === false) {
       stats.level+=1;
       stats.levelIncreaseFlag = true;
+      _displayLevel();
       return true;
     }
     return false;
   };
-
+  
+  function _displayPoints() {
+    document.querySelector('.points-container').innerHTML = `points: ${stats.points}`;
+  };
+  
+  function _displayLevel() {
+    document.querySelector('.level-container').innerHTML = `level: ${stats.level}`;
+  };
+  
+  function _displayUserName() {
+    
+  };
+  
   function _setNextLevel() {
-
+    return _checkPoints() ? _incrementLevel() : false;
   };
 
   function getStats() {
     return stats;
   };
 
-  function incrementPoints(value) {
+  function initStatsBoard() {
+
+  };
+
+  function _incrementPoints(value) {
     stats.points+=value;
+    _displayPoints();
   };
 
   function addIsland(randomIslands = [{}]) {
@@ -58,17 +76,23 @@ const statsController = (() => {
     console.log('check level', stats);
   }
 
+  function updateStats({type, payload}) {
+    if (type === 'incrementPoints') {
+      _incrementPoints(payload);
+    }
+  }
+
   function resetGame() {
 
   };
 
   return {
     getStats,
-    incrementPoints,
     addIsland,
     incrementPosition,
     decrementParachute,
     checkScore,
+    updateStats,
   };
 })();
 
