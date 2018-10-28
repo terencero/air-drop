@@ -9,11 +9,13 @@ const airplaneController = (() => {
     stats.checkScore();
     console.log('received event', e);
   });
-  airplane.addEventListener('nextLevel', (e) => {
-    stats.checkScore();
-    stopTracker();
-    console.log('received event', e);
-  });
+  function levelUpListener(stopTracker) {
+    airplane.addEventListener('nextLevel', (e) => {
+      stats.checkScore();
+      stopTracker();
+      console.log('received event', e);
+    });
+  }
   const randomLandingPadGenerator = (val) => {
     const island = document.createElement('div');
     const refNode = document.querySelector(`.island-container.${val}`);
@@ -63,6 +65,8 @@ const airplaneController = (() => {
     function stopTracker() {
       clearInterval(airPlanePath);
     }
+
+    levelUpListener(stopTracker);
   }
   
   const flyListener = (() => {
