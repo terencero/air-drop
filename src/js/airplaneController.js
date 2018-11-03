@@ -23,8 +23,8 @@ const airplaneController = (() => {
 
   function _resetListener(airplanePath) {
     if (reset) {
+      stopTracker(airplanePath);
       reset = false;
-      return stopTracker(airplanePath);
     }
   }
 
@@ -55,8 +55,6 @@ const airplaneController = (() => {
 
   function resetAirplane() {
     reset = true;
-    // _resetListener({activate: true});
-    moveAirplane();
     airplane.style.right = 0;
   }
   
