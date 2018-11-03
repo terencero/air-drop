@@ -10,6 +10,10 @@ const worldController = (() => {
     return world.weather.wind;
   };
 
+  function resetWind() {
+    world.weather.wind = 0;
+  }
+
   function incrementWind() {
     world.weather.wind+=1;
   };
@@ -39,12 +43,10 @@ const worldController = (() => {
 
   function addIslands(randomIslands = [{}]) {
     const layout = document.querySelector('.layout');
-    return Promise.resolve(
-      world.islands = Object.keys(randomIslands).reduce((islandAcc, island) => {
-        islandAcc[island] = randomIslands[island].value;
-        return islandAcc;
-      }, {})
-    );
+    return world.islands = Object.keys(randomIslands).reduce((islandAcc, island) => {
+      islandAcc[island] = randomIslands[island].value;
+      return islandAcc;
+    }, {});
   };
 
   function removeIslands() {
@@ -53,6 +55,11 @@ const worldController = (() => {
     return world.islands = {};
   };
 
+  function resetWorld() {
+    removeIslands();
+    resetWind();
+  }
+
   return {
     getWorld,
     incrementWind,
@@ -60,6 +67,7 @@ const worldController = (() => {
     randomIslandGenerator,
     addIslands,
     removeIslands,
+    resetWorld,
   }
 })();
 

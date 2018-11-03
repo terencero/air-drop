@@ -80,8 +80,13 @@ const statsController = (() => {
     board.updateBoard();
   };
 
-  function resetGame() {
-
+  function resetStats() {
+    stats.pos = 0;
+    stats.parachutes = 5;
+    stats.points = 0;
+    stats.level = 1;
+    stats.levelIncreaseFlag = false;
+    board.updateBoard();
   };
 
   return {
@@ -90,6 +95,7 @@ const statsController = (() => {
     checkScore,
     updateStats,
     initStatsBoard,
+    resetStats,
   };
 })();
 

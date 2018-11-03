@@ -1,6 +1,7 @@
-import airplane from './js/airplaneController';
 import world from './js/worldController';
 import stats from './js/statsController'
+import airplane from './js/airplaneController';
+import parachutes from './js/parachuteController';
 
 console.log('loaded');
 
@@ -13,6 +14,15 @@ const gameController = (() => {
       stats.initStatsBoard();
     });
   })();
+  
+  const resetListener = (() => {
+    document.querySelector('#reset').addEventListener('click', () => {
+      console.log('reset');
+      resetGame();
+      document.querySelector('button').blur();
+    });
+  })();
+
   function startGame() {
     world.addIslands({
       island1: {
@@ -24,11 +34,15 @@ const gameController = (() => {
       island3: {
         value: world.randomIslandGenerator('c').getBoundingClientRect(),
       },
-    }).then(() => airplane.moveAirplane());
+    })
+    airplane.moveAirplane();
   };
 
   function resetGame() {
-
+    airplane.resetAirplane();
+    world.resetWorld();
+    stats.resetStats();
+    parachutes.resetParachutes();
   };
 
   function continueToNextLevel() {
@@ -37,6 +51,7 @@ const gameController = (() => {
   
   return {
     startGame,
+    resetGame,
   }
 })();
 
