@@ -23,20 +23,18 @@ const airplaneController = (() => {
 
   const moveAirplane = () => {
     const layout = document.querySelector('.layout');
-    world.addIsland([
-      {
-        name: 'island1',
+    world.addIsland({
+      island1: {
         value: world.randomIslandGenerator('a').getBoundingClientRect(),
       },
-      {
-        name: 'island2',
+      island2: {
         value: world.randomIslandGenerator('b').getBoundingClientRect(),
       },
-      {
-        name: 'island3',
+      island3: {
         value: world.randomIslandGenerator('c').getBoundingClientRect(),
       },
-    ]);
+    });
+    console.log(world.getWorld());
     parachuteController();
     const airPlanePath = setInterval(() => {
       if (stats.getStats().pos > layout.offsetWidth) {

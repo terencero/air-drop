@@ -39,8 +39,8 @@ const worldController = (() => {
 
   function addIsland(randomIslands = [{}]) { // TODO: move this to the world controller?
     const layout = document.querySelector('.layout'); // TODO: move island appends here
-    world.islands = randomIslands.reduce((islandAcc, island) => {
-      islandAcc[island.name] = island.value;
+    world.islands = Object.keys(randomIslands).reduce((islandAcc, island) => {
+      islandAcc[island] = randomIslands[island].value;
       return islandAcc;
     }, {});
   };
