@@ -50,7 +50,6 @@ const statsController = (() => {
     if (stats.levelIncreaseFlag) {
       document.querySelector('#airplane').dispatchEvent(nextLevel);
       stats.pos = 0;
-      // TODO: move this to world stats.islands = {};
       stats.parachutes = 5;
       stats.points = 0;
       stats.levelIncreaseFlag = false;

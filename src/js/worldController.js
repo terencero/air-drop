@@ -50,9 +50,13 @@ const worldController = (() => {
   };
 
   function removeIslands() {
-    const containers = document.querySelectorAll('.island-container');
-    containers.forEach(container => container.removeChild(document.querySelector('.island-small')));
-    return world.islands = {};
+    const islands = document.querySelectorAll('.island-small');
+    if (islands) {
+      islands.forEach((island) => {
+        island.parentNode.removeChild(document.querySelector('.island-small'))
+      });
+    }
+    world.islands = {};
   };
 
   function resetWorld() {
