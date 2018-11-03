@@ -35,11 +35,8 @@ const airplaneController = (() => {
 
     const airplanePath = setInterval(() => {
       levelUpListener(airplanePath);
-      _resetListener(airplanePath);
-      // if (reset) {
-      //   reset = false;
-      //   return stopTracker(airplanePath);
-      // }
+      _resetListener(airplanePath); // TODO: ugly
+      
       if (stats.getStats().pos > layout.offsetWidth) {
         stopTracker(airplanePath);
         const endGame = new Event('endGame');
