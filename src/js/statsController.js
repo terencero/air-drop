@@ -4,7 +4,6 @@ import world from './worldController';
 const statsController = (() => {
   const stats = {
     pos: 0,
-    islands: {},
     parachutes: 5, // make this an array of parachutes?
     points: 0,
     level: 1,
@@ -51,7 +50,7 @@ const statsController = (() => {
     if (stats.levelIncreaseFlag) {
       document.querySelector('#airplane').dispatchEvent(nextLevel);
       stats.pos = 0;
-      stats.islands = {};
+      // TODO: move this to world stats.islands = {};
       stats.parachutes = 5;
       stats.points = 0;
       stats.levelIncreaseFlag = false;
@@ -67,20 +66,6 @@ const statsController = (() => {
     board.updateBoard();
   };
 
-  function addIsland(randomIslands = [{}]) { // TODO: move this to the world controller?
-    const layout = document.querySelector('.layout'); // TODO: move island appends here
-    stats.islands = randomIslands.reduce((islandAcc, island) => {
-      islandAcc[island.name] = island.value;
-      return islandAcc;
-    }, {});
-  };
-
-  function removeIslands() {
-    const containers = document.querySelectorAll('.island-container');
-    containers.forEach(container => container.removeChild(document.querySelector('.island-small')));
-    return stats.islands = {};
-  }
-
   function incrementPosition(value) {
     stats.pos+=value;
   };
@@ -88,12 +73,12 @@ const statsController = (() => {
   function checkScore() {
     _checkCurrentLevel();
     console.log('check level', stats);
-  }
+  };
 
   function updateStats({type, payload}) {
     stats.statsActions[type] ? stats.statsActions[type](payload) : 'action not found';
     board.updateBoard();
-  }
+  };
 
   function resetGame() {
 
@@ -101,12 +86,10 @@ const statsController = (() => {
 
   return {
     getStats,
-    addIsland,
     incrementPosition,
     checkScore,
     updateStats,
     initStatsBoard,
-    removeIslands,
   };
 })();
 

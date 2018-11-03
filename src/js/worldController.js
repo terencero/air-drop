@@ -1,17 +1,24 @@
 import stats from './statsController';
 
 const worldController = (() => {
-  const weather = {
-    wind: 0,
+  const world = {
+    weather: {
+      wind: 0,
+    },
+    islands: {},
   };
 
   function getWind() {
-    return weather.wind;
+    return world.weather.wind;
   };
 
   function incrementWind() {
-    weather.wind+=1;
+    world.weather.wind+=1;
   };
+
+  function getWorld() {
+    return world;
+  }
 
   function randomIslandGenerator(val){
     const island = document.createElement('div');
@@ -32,10 +39,27 @@ const worldController = (() => {
     return island;
   };
 
+  function addIsland(randomIslands = [{}]) { // TODO: move this to the world controller?
+    const layout = document.querySelector('.layout'); // TODO: move island appends here
+    world.islands = randomIslands.reduce((islandAcc, island) => {
+      islandAcc[island.name] = island.value;
+      return islandAcc;
+    }, {});
+  };
+
+  function removeIslands() {
+    const containers = document.querySelectorAll('.island-container');
+    containers.forEach(container => container.removeChild(document.querySelector('.island-small')));
+    return stats.islands = {};
+  };
+
   return {
+    getWorld,
     incrementWind,
     getWind,
     randomIslandGenerator,
+    addIsland,
+    removeIslands,
   }
 })();
 

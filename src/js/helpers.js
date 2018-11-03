@@ -1,10 +1,10 @@
-import stats from './statsController.js';
+import world from './worldController';
 
 function touchDetector (parachute) {
   const sea = document.querySelector('.sea');
-  const {islands} = stats.getStats();
+  const {islands} = world.getWorld();
   function landedOnIsland() {
-    return  Object.keys(stats.getStats().islands).some(island => {
+    return Object.keys(islands).some(island => {
       return (parachute.bottom === islands[island].top) &&
       (parachute.right >= islands[island].left) &&
       (parachute.left <= islands[island].right);
