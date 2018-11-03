@@ -1,4 +1,5 @@
 import stats from './statsController.js';
+import world from './worldController';
 import {touchDetector} from './helpers';
 
 function parachuteController() {
@@ -17,7 +18,8 @@ function parachuteController() {
   };
   
   function parachuteTracker(parachute, interval) {
-    let localPos = parseInt(parachute.style.top);
+    let localTopPos = parseInt(parachute.style.top);
+    let localRightPos = parseInt(parachute.style.right);
 
     const parachuteInterval = setInterval(() => {
       const boundaries = parachute.getBoundingClientRect()
@@ -29,8 +31,10 @@ function parachuteController() {
         console.log('detect island', stats.getStats());
         return stopTracker();
       }
-      localPos+=1
-      parachute.style.top = `${localPos}px`;
+      localTopPos+=1
+      parachute.style.top = `${localTopPos}px`;
+      localRightPos+=world.getWind();
+      parachute.style.right = `${localRightPos}px`;
     }, interval);
 
     function stopTracker() {

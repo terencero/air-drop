@@ -9,6 +9,7 @@ const airplaneController = (() => {
     stats.checkScore();
     console.log('received event', e);
   });
+
   function levelUpListener(stopTracker) {
     airplane.addEventListener('nextLevel', (e) => {
       stats.checkScore();
@@ -16,6 +17,7 @@ const airplaneController = (() => {
       console.log('received event', e);
     });
   }
+  
   const randomLandingPadGenerator = (val) => {
     const island = document.createElement('div');
     const refNode = document.querySelector(`.island-container.${val}`);

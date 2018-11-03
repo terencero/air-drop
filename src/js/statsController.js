@@ -1,4 +1,5 @@
 import board from './statsBoardController';
+import world from './worldController';
 
 const statsController = (() => {
   const stats = {
@@ -39,6 +40,7 @@ const statsController = (() => {
       stats.levelIncreaseFlag = true;
       board.displayGameMessage();
       _setNextLevel();
+      world.incrementWind();
       return true;
     }
     return false;
