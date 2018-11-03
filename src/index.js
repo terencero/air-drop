@@ -1,29 +1,20 @@
-import stats from './js/statsController';
-import parachuteController from './js/parachuteController';
+import airplane from './js/airplaneController';
 import world from './js/worldController';
+import stats from './js/statsController'
 
-const airplane = document.querySelector('#airplane');
 console.log('loaded');
 
-const airplaneController = (() => {
-  airplane.addEventListener('endGame', (e) => {
-    stats.checkScore();
-    world.removeIslands();
-    console.log('received event', e);
-  });
-  
-  function levelUpListener(stopTracker) {
-    airplane.addEventListener('nextLevel', (e) => {
-      stats.checkScore();
-      stopTracker();
-      world.removeIslands();
-      console.log('received event', e);
+const gameController = (() => {
+  const flyListener = (() => {
+    document.querySelector('#start').addEventListener('click', () => {
+      console.log('clicked');
+      startGame();
+      document.querySelector('button').blur();
+      stats.initStatsBoard();
     });
-  }
-
-  const moveAirplane = () => {
-    const layout = document.querySelector('.layout');
-    world.addIsland({
+  })();
+  function startGame() {
+    world.addIslands({
       island1: {
         value: world.randomIslandGenerator('a').getBoundingClientRect(),
       },
@@ -33,41 +24,21 @@ const airplaneController = (() => {
       island3: {
         value: world.randomIslandGenerator('c').getBoundingClientRect(),
       },
-    });
-    console.log(world.getWorld());
-    parachuteController();
-    const airPlanePath = setInterval(() => {
-      if (stats.getStats().pos > layout.offsetWidth) {
-        stopTracker();
-        const endGame = new Event('endGame');
-        document.querySelector('#airplane').dispatchEvent(endGame);
-      } else {
-        stats.incrementPosition(1);
-        console.log('increment')
-        airplane.style.right = `${stats.getStats().pos}px`;
-      }
-    }, 50);
+    }).then(() => airplane.moveAirplane());
+  };
 
-    function stopTracker() {
-      clearInterval(airPlanePath);
-    }
+  function resetGame() {
 
-    levelUpListener(stopTracker);
-  }
-  
-  const flyListener = (() => {
-    document.querySelector('button').addEventListener('click', () => {
-      console.log('clicked');
-      moveAirplane();
-      document.querySelector('button').blur();
-      stats.initStatsBoard();
-    });
-  })();
+  };
+
+  function continueToNextLevel() {
+
+  };
   
   return {
-    moveAirplane: moveAirplane,
+    startGame,
   }
 })();
 
 
-export default airplaneController;
+export default gameController;

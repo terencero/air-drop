@@ -37,12 +37,14 @@ const worldController = (() => {
     return island;
   };
 
-  function addIsland(randomIslands = [{}]) { // TODO: move this to the world controller?
-    const layout = document.querySelector('.layout'); // TODO: move island appends here
-    world.islands = Object.keys(randomIslands).reduce((islandAcc, island) => {
-      islandAcc[island] = randomIslands[island].value;
-      return islandAcc;
-    }, {});
+  function addIslands(randomIslands = [{}]) {
+    const layout = document.querySelector('.layout');
+    return Promise.resolve(
+      world.islands = Object.keys(randomIslands).reduce((islandAcc, island) => {
+        islandAcc[island] = randomIslands[island].value;
+        return islandAcc;
+      }, {})
+    );
   };
 
   function removeIslands() {
@@ -56,7 +58,7 @@ const worldController = (() => {
     incrementWind,
     getWind,
     randomIslandGenerator,
-    addIsland,
+    addIslands,
     removeIslands,
   }
 })();
