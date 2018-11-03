@@ -51,7 +51,7 @@ const worldController = (() => {
 
   function removeIslands() {
     const islands = document.querySelectorAll('.island-small');
-    if (islands) {
+    if (islands.length > 0) {
       islands.forEach((island) => {
         island.parentNode.removeChild(document.querySelector('.island-small'))
       });

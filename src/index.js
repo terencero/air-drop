@@ -34,7 +34,7 @@ const gameController = (() => {
       island3: {
         value: world.randomIslandGenerator('c').getBoundingClientRect(),
       },
-    })
+    });
     airplane.moveAirplane();
   };
 
@@ -48,11 +48,6 @@ const gameController = (() => {
   function continueToNextLevel() {
 
   };
-  
-  return {
-    startGame,
-    resetGame,
-  }
 })();
 
 

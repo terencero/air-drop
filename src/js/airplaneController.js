@@ -21,17 +21,25 @@ const airplaneController = (() => {
     });
   }
 
+  function _resetListener(airplanePath) {
+    if (reset) {
+      reset = false;
+      return stopTracker(airplanePath);
+    }
+  }
+
   function moveAirplane() {
     const layout = document.querySelector('.layout');
     console.log(world.getWorld());
     parachuteController.createParachuteListener();
 
     const airplanePath = setInterval(() => {
-      if (reset) {
-        airplane.style.right = 0;
-        reset = false;
-        return stopTracker(airplanePath);
-      }
+      levelUpListener(airplanePath);
+      _resetListener(airplanePath);
+      // if (reset) {
+      //   reset = false;
+      //   return stopTracker(airplanePath);
+      // }
       if (stats.getStats().pos > layout.offsetWidth) {
         stopTracker(airplanePath);
         const endGame = new Event('endGame');
@@ -41,9 +49,7 @@ const airplaneController = (() => {
         console.log('increment')
         airplane.style.right = `${stats.getStats().pos}px`;
       }
-    }, 50);
-
-    levelUpListener(airplanePath);
+    }, 20);
   }
   
   function stopTracker(airplanePath) {
@@ -52,6 +58,9 @@ const airplaneController = (() => {
 
   function resetAirplane() {
     reset = true;
+    // _resetListener({activate: true});
+    moveAirplane();
+    airplane.style.right = 0;
   }
   
   return {
