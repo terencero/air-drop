@@ -1,5 +1,6 @@
-import stats from './js/statsController.js';
-import parachuteController from './js/parachuteController.js';
+import stats from './js/statsController';
+import parachuteController from './js/parachuteController';
+import world from './js/worldController';
 
 const airplane = document.querySelector('#airplane');
 console.log('loaded');
@@ -7,56 +8,41 @@ console.log('loaded');
 const airplaneController = (() => {
   airplane.addEventListener('endGame', (e) => {
     stats.checkScore();
+    world.removeIslands();
     console.log('received event', e);
   });
-
+  
   function levelUpListener(stopTracker) {
     airplane.addEventListener('nextLevel', (e) => {
       stats.checkScore();
       stopTracker();
+      world.removeIslands();
       console.log('received event', e);
     });
   }
-  
-  const randomLandingPadGenerator = (val) => {
-    const island = document.createElement('div');
-    const refNode = document.querySelector(`.island-container.${val}`);
-    const gridPositions = {
-      1: 'start',
-      2: 'center',
-      3: 'end',
-    };
-    island.className = 'island-small';
-    island.style.width = `50px`;
-    island.style.height = `20px`;
-    island.style.backgroundColor = 'green';
-    island.style.alignSelf = `end`;
-    island.style.justifySelf = `${gridPositions[Math.floor(Math.random() * 3) + 1]}`;
-    island.style.bottom = `0`;
-    refNode.appendChild(island);
-    return island;
-  };
 
   const moveAirplane = () => {
     const layout = document.querySelector('.layout');
-    stats.addIsland([
+    world.addIsland([
       {
         name: 'island1',
-        value: randomLandingPadGenerator('a').getBoundingClientRect(),
+        value: world.randomIslandGenerator('a').getBoundingClientRect(),
       },
       {
         name: 'island2',
-        value: randomLandingPadGenerator('b').getBoundingClientRect(),
+        value: world.randomIslandGenerator('b').getBoundingClientRect(),
       },
       {
         name: 'island3',
-        value: randomLandingPadGenerator('c').getBoundingClientRect(),
+        value: world.randomIslandGenerator('c').getBoundingClientRect(),
       },
     ]);
     parachuteController();
     const airPlanePath = setInterval(() => {
       if (stats.getStats().pos > layout.offsetWidth) {
         stopTracker();
+        const endGame = new Event('endGame');
+        document.querySelector('#airplane').dispatchEvent(endGame);
       } else {
         stats.incrementPosition(1);
         console.log('increment')
