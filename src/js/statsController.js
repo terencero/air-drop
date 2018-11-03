@@ -67,13 +67,19 @@ const statsController = (() => {
     board.updateBoard();
   };
 
-  function addIsland(randomIslands = [{}]) {
-    const layout = document.querySelector('.layout');
-    stats.islands = randomIslands.reduce((allIslands, island) => {
-      allIslands[island.name] = island.value;
-      return allIslands;
+  function addIsland(randomIslands = [{}]) { // TODO: move this to the world controller?
+    const layout = document.querySelector('.layout'); // TODO: move island appends here
+    stats.islands = randomIslands.reduce((islandAcc, island) => {
+      islandAcc[island.name] = island.value;
+      return islandAcc;
     }, {});
   };
+
+  function removeIslands() {
+    const containers = document.querySelectorAll('.island-container');
+    containers.forEach(container => container.removeChild(document.querySelector('.island-small')));
+    return stats.islands = {};
+  }
 
   function incrementPosition(value) {
     stats.pos+=value;
@@ -100,6 +106,7 @@ const statsController = (() => {
     checkScore,
     updateStats,
     initStatsBoard,
+    removeIslands,
   };
 })();
 
