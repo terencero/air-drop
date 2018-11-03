@@ -1,5 +1,3 @@
-import stats from './statsController';
-
 const worldController = (() => {
   const world = {
     weather: {
@@ -50,7 +48,7 @@ const worldController = (() => {
   function removeIslands() {
     const containers = document.querySelectorAll('.island-container');
     containers.forEach(container => container.removeChild(document.querySelector('.island-small')));
-    return stats.islands = {};
+    return world.islands = {};
   };
 
   return {
