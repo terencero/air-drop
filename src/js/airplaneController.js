@@ -5,15 +5,6 @@ import world from './worldController';
 const airplaneController = (() => {
   const airplane = document.querySelector('#airplane');
   let reset = false;
-  
-  function levelUpListener(airplanePath) {
-    airplane.addEventListener('nextLevel', (e) => {
-      stats.checkScore();
-      stopTracker(airplanePath);
-      world.removeIslands();
-      console.log('received event', e);
-    });
-  }
 
   function _resetListener(airplanePath) {
     if (reset) {
@@ -29,7 +20,6 @@ const airplaneController = (() => {
     parachuteController.createParachuteListener();
 
     const airplanePath = setInterval(() => {
-      levelUpListener(airplanePath);
       _resetListener(airplanePath); // TODO: ugly
       
       if (stats.getStats().pos > layout.offsetWidth) {

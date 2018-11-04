@@ -47,7 +47,7 @@ const statsController = (() => {
   
   function _setNextLevel() {
     const nextLevel = new Event('nextLevel');
-    document.querySelector('#airplane').dispatchEvent(nextLevel);
+    document.querySelector('#stats-board').dispatchEvent(nextLevel);
     stats.pos = 0;
     stats.parachutes = 5;
     stats.points = 0;

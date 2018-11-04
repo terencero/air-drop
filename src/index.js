@@ -32,7 +32,9 @@ const gameController = (() => {
   });
 
   statsBoardContainer.addEventListener('nextLevel', (e) => {
-
+    stats.checkScore();
+    resetGame();
+    console.log('received level up event', e);
   });
 
   function startGame() {
