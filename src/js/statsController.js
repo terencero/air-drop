@@ -47,14 +47,11 @@ const statsController = (() => {
   
   function _setNextLevel() {
     const nextLevel = new Event('nextLevel');
-    if (stats.levelIncreaseFlag) {
-      document.querySelector('#airplane').dispatchEvent(nextLevel);
-      stats.pos = 0;
-      stats.parachutes = 5;
-      stats.points = 0;
-      stats.levelIncreaseFlag = false;
-    }
-    return _checkPoints() ? _incrementLevel() : false;
+    document.querySelector('#airplane').dispatchEvent(nextLevel);
+    stats.pos = 0;
+    stats.parachutes = 5;
+    stats.points = 0;
+    stats.levelIncreaseFlag = false;
   };
 
   function getStats() {

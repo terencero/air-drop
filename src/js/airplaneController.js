@@ -5,12 +5,6 @@ import world from './worldController';
 const airplaneController = (() => {
   const airplane = document.querySelector('#airplane');
   let reset = false;
-
-  airplane.addEventListener('endGame', (e) => {
-    stats.checkScore();
-    world.removeIslands();
-    console.log('received event', e);
-  });
   
   function levelUpListener(airplanePath) {
     airplane.addEventListener('nextLevel', (e) => {
@@ -29,6 +23,7 @@ const airplaneController = (() => {
   }
 
   function moveAirplane() {
+    reset = false; // TODO: more ugly code... find a better way to do this instead of hacky flag
     const layout = document.querySelector('.layout');
     console.log(world.getWorld());
     parachuteController.createParachuteListener();
@@ -40,7 +35,7 @@ const airplaneController = (() => {
       if (stats.getStats().pos > layout.offsetWidth) {
         stopTracker(airplanePath);
         const endGame = new Event('endGame');
-        document.querySelector('#airplane').dispatchEvent(endGame);
+        document.querySelector('#stats-board').dispatchEvent(endGame);
       } else {
         stats.incrementPosition(1);
         console.log('increment')
@@ -57,10 +52,15 @@ const airplaneController = (() => {
     reset = true;
     airplane.style.right = 0;
   }
+
+  function pauseAirplane() {
+    reset = true;
+  };
   
   return {
     moveAirplane,
     resetAirplane,
+    pauseAirplane,
   }
 })();
 

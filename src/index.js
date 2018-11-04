@@ -11,6 +11,7 @@ const gameController = (() => {
       console.log('clicked');
       startGame();
       document.querySelector('button').blur();
+      document.querySelector('#start').setAttribute('disabled', true);
       stats.initStatsBoard();
     });
   })();
@@ -22,6 +23,17 @@ const gameController = (() => {
       document.querySelector('button').blur();
     });
   })();
+
+  const statsBoardContainer = document.querySelector('#stats-board');
+  statsBoardContainer.addEventListener('endGame', (e) => {
+    stats.checkScore();
+    document.querySelector('#start').setAttribute('disabled', false);
+    console.log('received endgame event', e);
+  });
+
+  statsBoardContainer.addEventListener('nextLevel', (e) => {
+
+  });
 
   function startGame() {
     world.addIslands({
@@ -43,6 +55,7 @@ const gameController = (() => {
     world.resetWorld();
     stats.resetStats();
     parachutes.resetParachutes();
+    document.querySelector('#start').removeAttribute('disabled');
   };
 
   function continueToNextLevel() {
