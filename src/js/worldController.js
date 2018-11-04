@@ -64,6 +64,10 @@ const worldController = (() => {
     resetWind();
   }
 
+  function nextLevelWorld() {
+    
+  }
+
   return {
     getWorld,
     incrementWind,

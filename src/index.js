@@ -33,7 +33,7 @@ const gameController = (() => {
 
   statsBoardContainer.addEventListener('nextLevel', (e) => {
     stats.checkScore();
-    resetGame();
+    continueToNextLevel();
     console.log('received level up event', e);
   });
 
@@ -61,7 +61,10 @@ const gameController = (() => {
   };
 
   function continueToNextLevel() {
-
+    airplane.resetAirplane();
+    world.resetWorld();
+    parachutes.resetParachutes();
+    document.querySelector('#start').removeAttribute('disabled');
   };
 })();
 

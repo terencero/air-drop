@@ -17,6 +17,7 @@ const airplaneController = (() => {
     reset = false; // TODO: more ugly code... find a better way to do this instead of hacky flag
     const layout = document.querySelector('.layout');
     console.log(world.getWorld());
+    console.log(reset);
     parachuteController.createParachuteListener();
 
     const airplanePath = setInterval(() => {
