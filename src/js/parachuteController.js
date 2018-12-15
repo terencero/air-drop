@@ -4,6 +4,7 @@ import {touchDetector} from './helpers';
 
 const parachuteController = (() => {
   let reset = false;
+  let parachuteInterval;
   function createParachute() {
     let parachute = document.createElement('div');
     parachute.className = 'parachute';
@@ -22,12 +23,11 @@ const parachuteController = (() => {
     let localTopPos = parseInt(parachute.style.top);
     let localRightPos = parseInt(parachute.style.right);
 
-    const parachuteInterval = setInterval(() => {
+    parachuteInterval = setInterval(() => {
       const boundaries = parachute.getBoundingClientRect()
-      if (reset) {
-        reset = false;
-        return stopTracker(parachuteInterval);
-      }
+      // if (reset) { 
+      //   return stopTracker(parachuteInterval);
+      // }
       if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
         console.log('detect sea',stats.getStats());
         return stopTracker(parachuteInterval);
@@ -49,9 +49,11 @@ const parachuteController = (() => {
   };
 
   function resetParachutes() {
-    reset = true;
+    // reset = true;
     const parachutes = document.querySelectorAll('.parachute');
+    stopTracker(parachuteInterval);
     parachutes.forEach(parachute => parachute.parentNode.removeChild(parachute));
+    // reset = false;
   }
   
   function createParachuteListener() {

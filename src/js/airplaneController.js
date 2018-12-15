@@ -4,25 +4,14 @@ import world from './worldController';
 
 const airplaneController = (() => {
   const airplane = document.querySelector('#airplane');
-  let reset = false;
-
-  function _resetListener(airplanePath) {
-    if (reset) {
-      stopTracker(airplanePath);
-      reset = false;
-    }
-  }
+  let airplanePath;
 
   function moveAirplane() {
-    reset = false; // TODO: more ugly code... find a better way to do this instead of hacky flag
     const layout = document.querySelector('.layout');
     console.log(world.getWorld());
-    console.log(reset);
     parachuteController.createParachuteListener();
 
-    const airplanePath = setInterval(() => {
-      _resetListener(airplanePath); // TODO: ugly
-      
+    airplanePath = setInterval(() => {
       if (stats.getStats().pos > layout.offsetWidth) {
         stopTracker(airplanePath);
         const endGame = new Event('endGame');
@@ -39,8 +28,8 @@ const airplaneController = (() => {
     clearInterval(airplanePath);
   }
 
-  function resetAirplane() {
-    reset = true;
+  function resetAirplane() {    
+    stopTracker(airplanePath);
     airplane.style.right = 0;
   }
 
