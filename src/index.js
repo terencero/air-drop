@@ -27,14 +27,17 @@ const gameController = (() => {
 
   const statsBoardContainer = document.querySelector('#stats-board');
   statsBoardContainer.addEventListener('endGame', (e) => {
-    stats.checkScore();
-    document.querySelector('#start').setAttribute('disabled', false);
+    if (!stats.checkScore()) {
+      resetGame()
+    }
+    // document.querySelector('#start').removeAttribute('disabled');
     console.log('received endgame event', e);
   });
 
   statsBoardContainer.addEventListener('nextLevel', (e) => {
-    stats.checkScore();
-    continueToNextLevel();
+    if (stats.checkScore()) {
+      continueToNextLevel();
+    }
     console.log('received level up event', e);
   });
 
@@ -66,6 +69,11 @@ const gameController = (() => {
     world.resetWorld();
     parachutes.resetParachutes();
     document.querySelector('#start').removeAttribute('disabled');
+  };
+
+  function gameOver() {
+    // failed or all levels complete
+    
   };
 })();
 

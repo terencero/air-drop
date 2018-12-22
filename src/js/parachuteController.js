@@ -61,7 +61,6 @@ const parachuteController = (() => {
 
   function createParachuteListener() {
     document.body.onkeyup = (e) => {
-      // const endGame = new Event('endGame');
       if (stats.level === 5) {
         // TODO: do something with stats and levelling up
       }
@@ -71,9 +70,10 @@ const parachuteController = (() => {
           stats.updateStats({type: `decrementParachute`});
         }
       } else {
+        const endGame = new Event('endGame');
         // need to reset or freeze game
         // TODO: use an observer pattern to control airplane or gameplay in general? or use simple event emit?
-        // document.querySelector('#airplane').dispatchEvent(endGame);
+        document.querySelector('#stats-board').dispatchEvent(endGame);
         console.log('no more parachutes');
       }
     }

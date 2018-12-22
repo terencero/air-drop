@@ -4,10 +4,10 @@ import world from './worldController';
 
 const airplaneController = (() => {
   const airplane = document.querySelector('#airplane');
+  const layout = document.querySelector('.layout');
   let airplanePath;
 
   function moveAirplane() {
-    const layout = document.querySelector('.layout');
     console.log(world.getWorld());
     parachuteController.createParachuteListener();
 
