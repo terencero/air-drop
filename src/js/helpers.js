@@ -3,13 +3,14 @@ import world from './worldController';
 function touchDetector (parachute) {
   const sea = document.querySelector('.sea');
   const {islands} = world.getWorld();
+  
   function landedOnIsland() {
     return Object.keys(islands).some(island => {
       return (parachute.bottom === islands[island].top) &&
-      (parachute.right >= islands[island].left) &&
-      (parachute.left <= islands[island].right);
+      ((parachute.right >= islands[island].left) && (parachute.left <= islands[island].right));
     });
   }
+
   if (parachute.bottom === sea.getBoundingClientRect().top) {
     return {
       type: 'sea',

@@ -6,6 +6,7 @@ import parachutes from './js/parachuteController';
 console.log('loaded');
 
 const gameController = (() => {
+  // TODO: have button on index trigger the gameController
   const flyListener = (() => {
     document.querySelector('#start').addEventListener('click', () => {
       console.log('clicked');
