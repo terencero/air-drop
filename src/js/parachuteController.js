@@ -21,7 +21,7 @@ const parachuteController = (() => {
     let localTopPos = parseInt(parachute.style.top);
     let localRightPos = parseInt(parachute.style.right);
     let parachuteInterval;
-
+    // TODO: set parachuteInterval to null?
     return parachuteInterval = setInterval(() => {
       const boundaries = parachute.getBoundingClientRect()
 
