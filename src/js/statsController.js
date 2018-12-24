@@ -9,23 +9,21 @@ const statsController = (() => {
     level: 1,
     levelIncreaseFlag: false,
     statsActions: {
+      incrementPosition,
       incrementPoints: _incrementPoints,
       // _decrementPoints,
       incrementLevel: _incrementLevel,
       decrementParachute: _decrementParachute,
       resetLevel,
+      addParachute,
     },
   };
 
-  function _checkPoints() {
-    return !!(stats.points >= 3);
-  }
-
   function _checkCurrentLevel() {
-    if (!_checkPoints() && stats.parachutes === 0) {
+    if (!(stats.points >= 3) && stats.parachutes === 0) {
      return resetLevel();
     }
-    return _checkPoints() ? _incrementLevel() : false;
+    return (stats.points >= 3) ? _incrementLevel() : false;
   }
 
   function _incrementPoints(value) {

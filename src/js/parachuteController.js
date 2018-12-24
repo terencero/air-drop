@@ -90,8 +90,6 @@ const parachuteController = (() => {
     createParachuteListener,
     resetParachutes,
     pauseParachutes,
-    // resetParachutes: createParachute().resetParachutes,
-    // pauseParachutes: createParachute().pauseParachutes,
   }
 })();
 
