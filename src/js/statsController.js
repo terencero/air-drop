@@ -13,6 +13,7 @@ const statsController = (() => {
       // _decrementPoints,
       incrementLevel: _incrementLevel,
       decrementParachute: _decrementParachute,
+      resetLevel,
     },
   };
 
@@ -21,6 +22,9 @@ const statsController = (() => {
   }
 
   function _checkCurrentLevel() {
+    if (!_checkPoints() && stats.parachutes === 0) {
+     return resetLevel();
+    }
     return _checkPoints() ? _incrementLevel() : false;
   }
 
@@ -54,6 +58,13 @@ const statsController = (() => {
     stats.levelIncreaseFlag = false;
   };
 
+  function resetLevel() {
+    const endGame = new Event('endGame');
+    document.querySelector('#stats-board').dispatchEvent(endGame);
+    board.displayGameMessage();
+    return;
+  }
+
   function getStats() {
     return stats;
   };
@@ -67,8 +78,8 @@ const statsController = (() => {
   };
 
   function checkScore() {
-    _checkCurrentLevel();
     console.log('check level', stats);
+    return _checkCurrentLevel();
   };
 
   function updateStats({type, payload}) {

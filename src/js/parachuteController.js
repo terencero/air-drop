@@ -3,8 +3,8 @@ import world from './worldController';
 import {touchDetector} from './helpers';
 
 const parachuteController = (() => {
+  let parachuteRefs = {};
   function createParachute() {
-    let parachuteInterval;
     let parachute = document.createElement('div');
     parachute.className = 'parachute';
     parachute.style.width = `10px`;
@@ -13,50 +13,60 @@ const parachuteController = (() => {
     parachute.style.position = 'absolute';
     parachute.style.right = airplane.style.right;
     parachute.style.top = `50px`;
-    parachuteTracker(parachute, 10);
+
+    return parachute;
+  };
   
-    function parachuteTracker(parachute, interval) {
-      let localTopPos = parseInt(parachute.style.top);
-      let localRightPos = parseInt(parachute.style.right);
+  function parachuteTracker(parachute, interval) {
+    let localTopPos = parseInt(parachute.style.top);
+    let localRightPos = parseInt(parachute.style.right);
+    let parachuteInterval;
 
-      parachuteInterval = setInterval(() => {
-        const boundaries = parachute.getBoundingClientRect()
+    return parachuteInterval = setInterval(() => {
+      const boundaries = parachute.getBoundingClientRect()
 
-        if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
-          console.log('detect sea',stats.getStats());
-          stopTracker(parachuteInterval);
-          return false;
-        } else if (touchDetector(boundaries).type === 'island' && touchDetector(boundaries).value === true) {
-          stats.updateStats({type: `incrementPoints`, payload: 1});
-          console.log('detect island', stats.getStats());
-          stopTracker(parachuteInterval);
-          return false;
-        }
-        localTopPos+=1
-        parachute.style.top = `${localTopPos}px`;
-        localRightPos+=world.getWind();
-        parachute.style.right = `${localRightPos}px`;
-      }, interval);
+      if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
+        console.log('detect sea',stats.getStats());
+        stopTracker(parachuteInterval);
+        return false;
+      } else if (touchDetector(boundaries).type === 'island' && touchDetector(boundaries).value === true) {
+        stats.updateStats({type: `incrementPoints`, payload: 1});
+        console.log('detect island', stats.getStats());
+        stopTracker(parachuteInterval);
+        return false;
+      }
+      localTopPos+=1
+      parachute.style.top = `${localTopPos}px`;
+      localRightPos+=world.getWind();
+      parachute.style.right = `${localRightPos}px`;
+    }, interval);
+  };
 
-    };
+  function stopTracker(parachuteInterval) {
+    clearInterval(parachuteInterval);
+    parachuteInterval = null;
+  };
 
-    function stopTracker(parachuteInterval) {
-      return clearInterval(parachuteInterval);
-    };
+  function resetParachutes() {
+    const parachutes = document.querySelectorAll('.parachute');
+    Object.keys(parachuteRefs).forEach(ref => {
+      parachuteRefs[ref].parentNode.removeChild(parachuteRefs[ref]);
+    });
+  };
+  
+  function generateParachute() {
+    const parachute = createParachute();
+    document.querySelector('.air-lane').appendChild(parachute);
+    console.log('parachutes obj', parachuteRefs);
+    const par = parachuteTracker(parachute, 10);
+    parachuteRefs = {...parachuteRefs, [par]: parachute};
+    stats.updateStats({type: `decrementParachute`});
+  }; 
 
-    function resetParachutes() {
-      const parachutes = document.querySelectorAll('.parachute');
-      stopTracker(parachuteInterval);
-      parachutes.forEach(parachute => parachute.parentNode.removeChild(parachute));
-    };
-    
-    function generateCreatedParachute() {
-      document.querySelector('.air-lane').appendChild(parachute);
-    }
-    return {
-      generateCreatedParachute,
-      resetParachutes,
-    };
+  function pauseParachutes() {
+    Object.keys(parachuteRefs).forEach(ref => {
+      stopTracker(ref);
+    })
   };
 
   function createParachuteListener() {
@@ -66,14 +76,11 @@ const parachuteController = (() => {
       }
       if (stats.getStats().parachutes > 0) {
         if (e.keyCode === 32) {
-          createParachute().generateCreatedParachute();
-          stats.updateStats({type: `decrementParachute`});
+          generateParachute();
         }
       } else {
-        const endGame = new Event('endGame');
-        // need to reset or freeze game
         // TODO: use an observer pattern to control airplane or gameplay in general? or use simple event emit?
-        document.querySelector('#stats-board').dispatchEvent(endGame);
+        stats.updateStats({type: `resetLevel`});
         console.log('no more parachutes');
       }
     }
@@ -81,7 +88,10 @@ const parachuteController = (() => {
 
   return {
     createParachuteListener,
-    resetParachutes: createParachute().resetParachutes,
+    resetParachutes,
+    pauseParachutes,
+    // resetParachutes: createParachute().resetParachutes,
+    // pauseParachutes: createParachute().pauseParachutes,
   }
 })();
 

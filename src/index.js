@@ -27,10 +27,7 @@ const gameController = (() => {
 
   const statsBoardContainer = document.querySelector('#stats-board');
   statsBoardContainer.addEventListener('endGame', (e) => {
-    if (!stats.checkScore()) {
-      resetGame()
-    }
-    // document.querySelector('#start').removeAttribute('disabled');
+    pauseGame();
     console.log('received endgame event', e);
   });
 
@@ -71,9 +68,10 @@ const gameController = (() => {
     document.querySelector('#start').removeAttribute('disabled');
   };
 
-  function gameOver() {
-    // failed or all levels complete
-    
+  function pauseGame() {
+    // failed or all levels complete or pause game option
+    parachutes.pauseParachutes();
+    airplane.pauseAirplane();  
   };
 })();
 

@@ -34,7 +34,7 @@ const airplaneController = (() => {
   }
 
   function pauseAirplane() {
-    reset = true;
+    stopTracker(airplanePath);
   };
   
   return {

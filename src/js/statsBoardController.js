@@ -26,9 +26,11 @@ const statsBoardController = (() => {
     modal.style.position = `fixed`;
     if (stats.getStats().levelIncreaseFlag) {
       message = document.createTextNode(successMessage);
-      modal.appendChild(message);
-      document.querySelector('.layout').appendChild(modal);
+    } else {
+      message = document.createTextNode(failureMessage);
     }
+    modal.appendChild(message);
+    document.querySelector('.layout').appendChild(modal);
   }
 
   function updateBoard() {
