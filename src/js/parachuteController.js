@@ -44,7 +44,6 @@ const parachuteController = (() => {
 
   function stopTracker(parachuteInterval) {
     clearInterval(parachuteInterval);
-    parachuteInterval = null;
   };
 
   function resetParachutes() {
@@ -52,13 +51,14 @@ const parachuteController = (() => {
     Object.keys(parachuteRefs).forEach(ref => {
       parachuteRefs[ref].parentNode.removeChild(parachuteRefs[ref]);
     });
+    parachuteRefs = {};
   };
   
   function generateParachute() {
     const parachute = createParachute();
     document.querySelector('.air-lane').appendChild(parachute);
     console.log('parachutes obj', parachuteRefs);
-    const par = parachuteTracker(parachute, 10);
+    let par = parachuteTracker(parachute, 10);
     parachuteRefs = {...parachuteRefs, [par]: parachute};
     stats.updateStats({type: `decrementParachute`});
   }; 
