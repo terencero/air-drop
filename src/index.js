@@ -1,7 +1,8 @@
 import world from './js/worldController';
-import stats from './js/statsController'
+import stats from './js/stats-controllers/statsController'
 import airplane from './js/airplaneController';
-import parachutes from './js/parachuteController';
+import parachutes from './js/stats-controllers/parachute-controller/parachuteController';
+import parachuteController from './js/stats-controllers/parachute-controller/parachuteController';
 
 console.log('loaded');
 
@@ -13,6 +14,7 @@ const gameController = (() => {
       startGame();
       document.querySelector('button').blur();
       document.querySelector('#start').setAttribute('disabled', true);
+      parachuteController.requestParachutes();
       stats.initStatsBoard();
     });
   })();
@@ -70,7 +72,6 @@ const gameController = (() => {
 
   function pauseGame() {
     // failed or all levels complete or pause game option
-    parachutes.pauseParachutes();
     airplane.pauseAirplane();  
   };
 })();

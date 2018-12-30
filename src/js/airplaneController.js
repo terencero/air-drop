@@ -1,5 +1,5 @@
-import stats from './statsController';
-import parachuteController from './parachuteController';
+import stats from './stats-controllers/statsController';
+import parachuteController from './stats-controllers/parachute-controller/parachuteGenerator';
 import world from './worldController';
 
 const airplaneController = (() => {

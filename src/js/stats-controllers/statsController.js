@@ -1,10 +1,12 @@
 import board from './statsBoardController';
-import world from './worldController';
+import world from '../worldController';
+// import parachuteController from './parachute-controller/parachuteController';
 
 const statsController = (() => {
+  // TODO: just make this into an object and compose with smaller control modules?
   const stats = {
     pos: 0,
-    parachutes: 5, // make this an array of parachutes?
+    parachutes: {},
     points: 0,
     level: 1,
     levelIncreaseFlag: false,
@@ -15,12 +17,12 @@ const statsController = (() => {
       incrementLevel: _incrementLevel,
       decrementParachute: _decrementParachute,
       resetLevel,
-      addParachute,
+      // notifyLanding,
     },
   };
 
   function _checkCurrentLevel() {
-    if (!(stats.points >= 3) && stats.parachutes === 0) {
+    if (!(stats.points >= 3) && stats.parachutes.length === 0) {
      return resetLevel();
     }
     return (stats.points >= 3) ? _incrementLevel() : false;
@@ -101,6 +103,7 @@ const statsController = (() => {
     updateStats,
     initStatsBoard,
     resetStats,
+    resetLevel,
   };
 })();
 
