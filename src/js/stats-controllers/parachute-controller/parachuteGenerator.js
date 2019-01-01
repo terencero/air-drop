@@ -63,7 +63,7 @@ const parachuteGenerator = (() => {
     for (let i = 0; i < requestValue; i++) {
       parachuteObj[i] = {
         parachuteCtrl: createParachute(), 
-        intervalId: null,
+        intervalId: `ready`,
       };
     }
     return parachuteObj;
@@ -71,19 +71,14 @@ const parachuteGenerator = (() => {
 
   function createParachuteListener() {
     document.body.onkeyup = (e) => {
-      if (stats.level === 5) {
-        // TODO: do something with stats and levelling up
-      }
-      if (Object.keys(stats.getStats().parachutes).length > 0) {
         if (e.keyCode === 32) {
           parachuteController.deployParachute();
         }
-      } else {
+      
         // TODO: use an observer pattern to control airplane or gameplay in general? or use simple event emit?
-        stats.updateStats({type: `resetLevel`});
-        console.log('no more parachutes');
+        // stats.updateStats({type: `resetLevel`});
+        // console.log('no more parachutes');
       }
-    }
   };
 
   return {

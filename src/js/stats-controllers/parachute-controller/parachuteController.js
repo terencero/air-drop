@@ -11,23 +11,6 @@ function requestParachutes() {
   stats.getStats().parachutes = parachuteGenerator.generateParachutes({requestValue});
 }
 
-function _findDeployableParachute() {
-  const keys = Object.keys(stats.getStats().parachutes);
-  const availableParachuteKey = keys.find(parachute => stats.getStats().parachutes[parachute].intervalId === null);
-  if (availableParachuteKey === undefined) {
-    stats.resetLevel();
-    pauseParachutes();
-    return false;
-  }
-  const availableParachute = stats.getStats().parachutes[availableParachuteKey];
-  return {
-    key: availableParachuteKey,
-    parachute: availableParachute.parachuteCtrl.parachute,
-    actions: {
-      parachuteTracker: availableParachute.parachuteCtrl.parachuteTracker,
-    }
-  }
-}
 
 function deployParachute() {
   const {key, parachute, actions} = _findDeployableParachute();
@@ -57,11 +40,36 @@ function resetParachutes() {
 function notifyLanding({type, intervalId}) {
   const key = Object.keys(stats.getStats().parachutes).find(ref => stats.getStats().parachutes[ref].intervalId === intervalId);
   stats.getStats().parachutes[key].intervalId = `expired`;
+  if (_remainingIntervalIds().length === 5) {
+    stats.resetLevel();
+    pauseParachutes();
+  }
   if (type === 'island') {
     // TODO: increment points, remove point logic from the parachute controller
     stats.updateStats({type: `incrementPoints`, payload: 1});
-  } else if (type === 'sea') {
-    // stuff
+  }
+};
+
+function _remainingIntervalIds() {
+  const keys = Object.keys(stats.getStats().parachutes);
+  return keys.filter(parachute => stats.getStats().parachutes[parachute].intervalId === `expired`);
+};
+
+function _findDeployableParachute() {
+  const keys = Object.keys(stats.getStats().parachutes);
+  const availableParachuteKey = keys.find(parachute => stats.getStats().parachutes[parachute].intervalId === `ready`);
+  if (availableParachuteKey === undefined) {
+    // stats.resetLevel();
+    // pauseParachutes();
+    return;
+  }
+  const availableParachute = stats.getStats().parachutes[availableParachuteKey];
+  return {
+    key: availableParachuteKey,
+    parachute: availableParachute.parachuteCtrl.parachute,
+    actions: {
+      parachuteTracker: availableParachute.parachuteCtrl.parachuteTracker,
+    }
   }
 }
 
