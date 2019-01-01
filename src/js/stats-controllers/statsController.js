@@ -17,7 +17,6 @@ const statsController = (() => {
       incrementLevel: _incrementLevel,
       decrementParachute: _decrementParachute,
       resetLevel,
-      // notifyLanding,
     },
   };
 
@@ -38,24 +37,20 @@ const statsController = (() => {
   };
   
   function _incrementLevel() {
-    if (!stats.levelIncreaseFlag) {
-      stats.level+=1;
-      stats.levelIncreaseFlag = true;
-      board.displayGameMessage();
-      _setNextLevel();
-      world.incrementWind();
-      return true;
-    }
-    return false;
+    stats.level+=1;
+    board.displayGameMessage();
+    _notifyNextLevel();
+    world.incrementWind();
+    return true;
   };
   
-  function _setNextLevel() {
+  function _notifyNextLevel() {
     const nextLevel = new Event('nextLevel');
     document.querySelector('#stats-board').dispatchEvent(nextLevel);
-    stats.pos = 0;
-    stats.parachutes = 5;
-    stats.points = 0;
-    stats.levelIncreaseFlag = false;
+  };
+
+  function getStats() {
+    return stats;
   };
 
   function resetLevel() {
@@ -64,10 +59,6 @@ const statsController = (() => {
     board.displayGameMessage();
     return;
   }
-
-  function getStats() {
-    return stats;
-  };
 
   function initStatsBoard() {
     board.updateBoard();
@@ -88,8 +79,9 @@ const statsController = (() => {
   };
 
   function resetStats() {
+    // TODO: what should this control?
     stats.pos = 0;
-    stats.parachutes = 5;
+    // stats.parachutes = {};
     stats.points = 0;
     stats.level = 1;
     stats.levelIncreaseFlag = false;

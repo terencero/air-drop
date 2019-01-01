@@ -17,7 +17,6 @@ const airplaneController = (() => {
         const endGame = new Event('endGame');
         document.querySelector('#stats-board').dispatchEvent(endGame);
       } else {
-        // stats.incrementPosition(1);
         stats.updateStats({type: `incrementPosition`, payload: 1})
         console.log('increment')
         airplane.style.right = `${stats.getStats().pos}px`;

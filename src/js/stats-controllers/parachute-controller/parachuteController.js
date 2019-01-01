@@ -43,14 +43,26 @@ function pauseParachutes() {
   });
 };
 
+function resetParachutes() {
+  const parachuteRefs = stats.getStats().parachutes;
+  let tempParachute;
+  Object.keys(parachuteRefs).forEach(ref => {
+    if (parachuteRefs[ref].intervalId != null){
+      tempParachute = parachuteRefs[ref].parachuteCtrl.parachute;
+      tempParachute.parentNode.removeChild(tempParachute);
+    }
+  });
+};
+
 function notifyLanding({type, intervalId}) {
+  const key = Object.keys(stats.getStats().parachutes).find(ref => stats.getStats().parachutes[ref].intervalId === intervalId);
+  stats.getStats().parachutes[key].intervalId = `expired`;
   if (type === 'island') {
     // TODO: increment points, remove point logic from the parachute controller
+    stats.updateStats({type: `incrementPoints`, payload: 1});
   } else if (type === 'sea') {
     // stuff
   }
-  const key = Object.keys(stats.getStats().parachutes).find(ref => stats.getStats().parachutes[ref].intervalId === intervalId);
-  stats.getStats().parachutes[key].intervalId = `expired`;
 }
 
 export default {
@@ -58,4 +70,5 @@ export default {
   deployParachute,
   pauseParachutes,
   notifyLanding,
+  resetParachutes,
 }

@@ -19,7 +19,6 @@ const parachuteGenerator = (() => {
       parachute,
       parachuteTracker,
       stopTracker,
-      resetParachutes,
     }
     // return parachute;
   };
@@ -40,7 +39,6 @@ const parachuteGenerator = (() => {
         stopTracker(parachuteInterval);
         return false;
       } else if (touchDetector(boundaries).type === 'island' && touchDetector(boundaries).value === true) {
-        stats.updateStats({type: `incrementPoints`, payload: 1});
         console.log('detect island', stats.getStats());
         // stats.updateStats({type: `notifyLanding`, payload: {type: `island`, intervalId: parachuteInterval}})
         parachuteController.notifyLanding({type: `island`, intervalId: parachuteInterval});
@@ -58,14 +56,6 @@ const parachuteGenerator = (() => {
   function stopTracker(parachuteInterval) {
     clearInterval(parachuteInterval);
   };
-
-  function resetParachutes() {
-    const parachutes = document.querySelectorAll('.parachute');
-    Object.keys(parachuteRefs).forEach(ref => {
-      parachuteRefs[ref].parentNode.removeChild(parachuteRefs[ref]);
-    });
-    parachuteRefs = {};
-  };
   
   function generateParachutes({requestValue}) {
     console.log('parachutes obj', parachuteRefs);
@@ -74,16 +64,10 @@ const parachuteGenerator = (() => {
       parachuteObj[i] = {
         parachuteCtrl: createParachute(), 
         intervalId: null,
-        resetParachutes,
-        pauseParachute,
       };
     }
     return parachuteObj;
   }; 
-
-  function pauseParachute({intervalId}) {
-    stopTracker(intervalId);
-  };
 
   function createParachuteListener() {
     document.body.onkeyup = (e) => {
@@ -104,7 +88,6 @@ const parachuteGenerator = (() => {
 
   return {
     createParachuteListener,
-    resetParachutes,
     generateParachutes,
     // pauseParachutes,
   }

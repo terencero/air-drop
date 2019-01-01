@@ -34,9 +34,7 @@ const gameController = (() => {
   });
 
   statsBoardContainer.addEventListener('nextLevel', (e) => {
-    if (stats.checkScore()) {
-      continueToNextLevel();
-    }
+    continueToNextLevel();
     console.log('received level up event', e);
   });
 
