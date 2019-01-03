@@ -1,6 +1,6 @@
 import stats from './stats-controllers/statsController';
-import parachuteController from './stats-controllers/parachute-controller/parachuteGenerator';
-import world from './worldController';
+import parachuteController from './stats-controllers/parachute-controller/parachuteController';
+import world from './stats-controllers/world-controller/worldController';
 
 const airplaneController = (() => {
   const airplane = document.querySelector('#airplane');

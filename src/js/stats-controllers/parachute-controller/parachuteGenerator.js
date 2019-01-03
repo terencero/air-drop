@@ -1,10 +1,9 @@
 import stats from '../statsController.js';
-import world from '../../worldController';
+import world from '../world-controller/worldController';
 import parachuteController from './parachuteController';
 import {touchDetector} from '../../helpers';
 
 const parachuteGenerator = (() => { 
-  // TODO: change this to a parachute generator, move the controller logic into controls object modules
   let parachuteRefs = {};
   function createParachute() {
     let parachute = document.createElement('div');
@@ -20,7 +19,6 @@ const parachuteGenerator = (() => {
       parachuteTracker,
       stopTracker,
     }
-    // return parachute;
   };
   
   function parachuteTracker({parachute}, interval) {
@@ -34,13 +32,11 @@ const parachuteGenerator = (() => {
 
       if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
         console.log('detect sea',stats.getStats());
-        // stats.updateStats({type: `notifyLanding`, payload: {type: `sea`, intervalId: parachuteInterval}})
         parachuteController.notifyLanding({type: `sea`, intervalId: parachuteInterval});
         stopTracker(parachuteInterval);
         return false;
       } else if (touchDetector(boundaries).type === 'island' && touchDetector(boundaries).value === true) {
         console.log('detect island', stats.getStats());
-        // stats.updateStats({type: `notifyLanding`, payload: {type: `island`, intervalId: parachuteInterval}})
         parachuteController.notifyLanding({type: `island`, intervalId: parachuteInterval});
         stopTracker(parachuteInterval);
         return false;
@@ -49,7 +45,6 @@ const parachuteGenerator = (() => {
       parachute.style.top = `${localTopPos}px`;
       localRightPos+=world.getWind();
       parachute.style.right = `${localRightPos}px`;
-      console.log('stuff and nonsense');
     }, interval);
   };
 
@@ -69,20 +64,8 @@ const parachuteGenerator = (() => {
     return parachuteObj;
   }; 
 
-  function createParachuteListener() {
-    // TODO: move this and some other controller things to controller 
-    document.body.onkeyup = (e) => {
-        if (e.keyCode === 32) {
-          parachuteController.deployParachute();
-        }
-        // TODO: use an observer pattern to control airplane or gameplay in general? or use simple event emit?
-      }
-  };
-
   return {
-    createParachuteListener,
     generateParachutes,
-    // pauseParachutes,
   }
 })();
 

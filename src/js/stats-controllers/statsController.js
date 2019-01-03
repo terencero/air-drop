@@ -1,6 +1,5 @@
 import board from './statsBoardController';
-import world from '../worldController';
-// import parachuteController from './parachute-controller/parachuteController';
+import world from './world-controller/worldController';
 
 const statsController = (() => {
   // TODO: just make this into an object and compose with smaller control modules?
@@ -38,15 +37,16 @@ const statsController = (() => {
   
   function _incrementLevel() {
     stats.level+=1;
-    board.displayGameMessage();
     _notifyNextLevel();
     world.incrementWind();
+    stats.pos = 0;
     return true;
   };
   
   function _notifyNextLevel() {
     const nextLevel = new Event('nextLevel');
     document.querySelector('#stats-board').dispatchEvent(nextLevel);
+    board.displayGameMessage({message: `success`});
   };
 
   function getStats() {
@@ -56,7 +56,7 @@ const statsController = (() => {
   function resetLevel() {
     const endGame = new Event('endGame');
     document.querySelector('#stats-board').dispatchEvent(endGame);
-    board.displayGameMessage();
+    board.displayGameMessage({message: `failure`});
     return;
   }
 

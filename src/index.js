@@ -1,4 +1,4 @@
-import world from './js/worldController';
+import world from './js/stats-controllers/world-controller/worldController';
 import stats from './js/stats-controllers/statsController'
 import airplane from './js/airplaneController';
 import parachutes from './js/stats-controllers/parachute-controller/parachuteController';
@@ -11,11 +11,10 @@ const gameController = (() => {
   const flyListener = (() => {
     document.querySelector('#start').addEventListener('click', () => {
       console.log('clicked');
+      // world.createWorld();
       startGame();
       document.querySelector('button').blur();
       document.querySelector('#start').setAttribute('disabled', true);
-      parachuteController.requestParachutes();
-      stats.initStatsBoard();
     });
   })();
   
@@ -26,33 +25,25 @@ const gameController = (() => {
       document.querySelector('button').blur();
     });
   })();
-
+  
   const statsBoardContainer = document.querySelector('#stats-board');
   statsBoardContainer.addEventListener('endGame', (e) => {
     pauseGame();
     console.log('received endgame event', e);
   });
-
+  
   statsBoardContainer.addEventListener('nextLevel', (e) => {
     continueToNextLevel();
     console.log('received level up event', e);
   });
-
+  
   function startGame() {
-    world.addIslands({
-      island1: {
-        value: world.randomIslandGenerator('a').getBoundingClientRect(),
-      },
-      island2: {
-        value: world.randomIslandGenerator('b').getBoundingClientRect(),
-      },
-      island3: {
-        value: world.randomIslandGenerator('c').getBoundingClientRect(),
-      },
-    });
+    world.createWorld();
     airplane.moveAirplane();
+    parachuteController.requestParachutes();
+    stats.initStatsBoard();
   };
-
+  
   function resetGame() {
     airplane.resetAirplane();
     world.resetWorld();

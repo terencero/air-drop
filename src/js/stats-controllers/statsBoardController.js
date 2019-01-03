@@ -17,17 +17,18 @@ const statsBoardController = (() => {
     
   };
 
-  function displayGameMessage() {
+  function displayGameMessage({message}) {
     const successMessage = `Congrats! You've made it to the next level!`;
     const failureMessage = `Too bad... Maybe next time. Restart the game? Don't be a quitter!`
-    let message = ``;
     let modal = document.createElement(`div`);
     modal.setAttribute(`class`, `message-modal`);
     modal.style.position = `fixed`;
-    if (stats.getStats().levelIncreaseFlag) {
+    if (message === `success`) {
       message = document.createTextNode(successMessage);
-    } else {
+    } else if (message === `failure`) {
       message = document.createTextNode(failureMessage);
+    } else {
+      return;
     }
     modal.appendChild(message);
     document.querySelector('.layout').appendChild(modal);

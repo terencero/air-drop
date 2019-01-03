@@ -11,9 +11,17 @@ function requestParachutes() {
   stats.getStats().parachutes = parachuteGenerator.generateParachutes({requestValue});
 }
 
+function createParachuteListener() {
+  document.body.onkeyup = (e) => {
+      if (e.keyCode === 32) {
+        deployParachute();
+      }
+      // TODO: use an observer pattern to control airplane or gameplay in general? or use simple event emit?
+    }
+};
 
 function deployParachute() {
-  const {key, parachute, actions} = _findDeployableParachute();
+  const {key = false, parachute, actions} = _findDeployableParachute();
   if (key) {
     stats.getStats().parachutes[key].intervalId = actions.parachuteTracker({parachute: parachute}, 10);
     document.querySelector('.air-lane').appendChild(parachute);
@@ -30,7 +38,7 @@ function resetParachutes() {
   const parachuteRefs = stats.getStats().parachutes;
   let tempParachute;
   Object.keys(parachuteRefs).forEach(ref => {
-    if (parachuteRefs[ref].intervalId != null){
+    if (parachuteRefs[ref].intervalId !== `ready`){
       tempParachute = parachuteRefs[ref].parachuteCtrl.parachute;
       tempParachute.parentNode.removeChild(tempParachute);
     }
@@ -40,7 +48,7 @@ function resetParachutes() {
 function notifyLanding({type, intervalId}) {
   const key = Object.keys(stats.getStats().parachutes).find(ref => stats.getStats().parachutes[ref].intervalId === intervalId);
   stats.getStats().parachutes[key].intervalId = `expired`;
-  if (_remainingIntervalIds().length === 5) {
+  if (_filterExpiredIntervalIds().length === 5) {
     stats.resetLevel();
     pauseParachutes();
   }
@@ -50,7 +58,7 @@ function notifyLanding({type, intervalId}) {
   }
 };
 
-function _remainingIntervalIds() {
+function _filterExpiredIntervalIds() {
   const keys = Object.keys(stats.getStats().parachutes);
   return keys.filter(parachute => stats.getStats().parachutes[parachute].intervalId === `expired`);
 };
@@ -59,8 +67,6 @@ function _findDeployableParachute() {
   const keys = Object.keys(stats.getStats().parachutes);
   const availableParachuteKey = keys.find(parachute => stats.getStats().parachutes[parachute].intervalId === `ready`);
   if (availableParachuteKey === undefined) {
-    // stats.resetLevel();
-    // pauseParachutes();
     return;
   }
   const availableParachute = stats.getStats().parachutes[availableParachuteKey];
@@ -79,4 +85,5 @@ export default {
   pauseParachutes,
   notifyLanding,
   resetParachutes,
+  createParachuteListener,
 }
