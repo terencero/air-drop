@@ -77,7 +77,7 @@ function _findDeployableParachute() {
       parachuteTracker: availableParachute.parachuteCtrl.parachuteTracker,
     }
   }
-}
+};
 
 export default {
   requestParachutes,
