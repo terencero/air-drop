@@ -41,6 +41,7 @@ const statsController = (() => {
     stats.level+=1;
     _notifyNextLevel();
     world.incrementWind();
+    board.displayGameMessage({message: `wind`});
     stats.pos = 0;
     return true;
   };
@@ -80,6 +81,10 @@ const statsController = (() => {
     board.updateBoard();
   };
 
+  function resetPoints() {
+    stats.points = 0;
+  };
+
   function resetStats() {
     // TODO: what should this control?
     stats.pos = 0;
@@ -98,6 +103,7 @@ const statsController = (() => {
     initStatsBoard,
     resetStats,
     resetLevel,
+    resetPoints,
   };
 })();
 

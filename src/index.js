@@ -56,6 +56,7 @@ const gameController = (() => {
     airplane.resetAirplane();
     world.resetWorld();
     parachutes.resetParachutes();
+    stats.resetPoints();
     document.querySelector('#start').removeAttribute('disabled');
   };
 

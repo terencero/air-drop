@@ -3,11 +3,11 @@ import parachuteGenerator from './parachuteGenerator';
 
 function requestParachutes() {
   let requestValue;
-  if (stats.getStats().level === 1) {
+  // if (stats.getStats().level === 1) {
     requestValue = 5
-  } else {
-    requestValue = 3
-  }
+  // } else {
+    // requestValue = 3
+  // }
   stats.getStats().parachutes = parachuteGenerator.generateParachutes({requestValue});
 }
 
