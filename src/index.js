@@ -38,6 +38,7 @@ const gameController = (() => {
   });
   
   function startGame() {
+    stats.resetBoardNextLevel();
     world.createWorld();
     airplane.moveAirplane();
     parachuteController.requestParachutes();
@@ -56,7 +57,6 @@ const gameController = (() => {
     airplane.resetAirplane();
     world.resetWorld();
     parachutes.resetParachutes();
-    stats.resetPoints();
     document.querySelector('#start').removeAttribute('disabled');
   };
 

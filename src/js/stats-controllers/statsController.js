@@ -81,8 +81,9 @@ const statsController = (() => {
     board.updateBoard();
   };
 
-  function resetPoints() {
+  function resetBoardNextLevel() {
     stats.points = 0;
+    board.clearBoard();
   };
 
   function resetStats() {
@@ -93,6 +94,7 @@ const statsController = (() => {
     stats.level = 1;
     stats.levelIncreaseFlag = false;
     board.updateBoard();
+    board.clearBoard();
   };
 
   return {
@@ -103,7 +105,7 @@ const statsController = (() => {
     initStatsBoard,
     resetStats,
     resetLevel,
-    resetPoints,
+    resetBoardNextLevel,
   };
 })();
 

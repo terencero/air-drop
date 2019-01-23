@@ -44,9 +44,15 @@ const statsBoardController = (() => {
     _displayParachutes();
   };
 
+  function clearBoard() {
+    const messageModal = document.querySelector(`.message-modal`);
+    return messageModal && messageModal.remove();
+  };
+
   return {
     displayGameMessage,
     updateBoard,
+    clearBoard,
   }
 })();
 
