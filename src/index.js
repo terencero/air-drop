@@ -5,6 +5,11 @@ import parachutes from './js/stats-controllers/parachute-controller/parachuteCon
 import parachuteController from './js/stats-controllers/parachute-controller/parachuteController';
 
 console.log('loaded');
+let p = document.createElement('div');
+p.style.width = '50px';
+p.style.height = '50px';
+p.style.color = 'black';
+document.querySelector('.layout').appendChild(p);
 
 const gameController = (() => {
   // TODO: have button on index trigger the gameController

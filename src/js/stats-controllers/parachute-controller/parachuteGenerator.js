@@ -4,6 +4,8 @@ import parachuteController from './parachuteController';
 import {touchDetector} from '../../helpers';
 
 const parachuteGenerator = (() => { 
+  const worldHeight = document.querySelector('.layout').offsetHeight;
+
   let parachuteRefs = {};
   function createParachute() {
     let parachute = document.createElement('div');
@@ -41,7 +43,11 @@ const parachuteGenerator = (() => {
         stopTracker(parachuteInterval);
         return false;
       }
-      localTopPos+=1
+      if (localTopPos > worldHeight/2) {
+        localTopPos+=.5
+      } else {
+        localTopPos+=1
+      }
       parachute.style.top = `${localTopPos}px`;
       localRightPos+=world.getWind();
       parachute.style.right = `${localRightPos}px`;

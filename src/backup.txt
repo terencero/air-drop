@@ -1,0 +1,61 @@
+<div class="wrapper">
+  <div class="parachute-container">
+    <canvas class="parachute" width="25" height="10"></canvas>
+  </div>
+  <div class="cord-payload-container">
+    <div class="canvas-container"></div>
+    <div class="p"></div> 
+  </div>
+</div>
+
+.p {
+  background-color: black;
+  height: 10px;
+  width: 10px;
+}
+.wrapper {
+  height: 30px;
+  width: 80px;
+  padding: 0 10px;
+}
+
+.cord-payload-container {
+  margin: -4px 0 0 4px;
+}
+
+.parachute-container {
+/*   padding: 10px; */
+}
+
+let p = document.querySelector('.p');
+
+let lineL = document.createElement('canvas');
+lineL.classList.add('l'); 
+lineL.height = '30';
+lineL.width ='5';
+document.querySelector('.canvas-container').appendChild(lineL);
+let canvasT = document.querySelector("canvas.l");
+let contextT = canvasT.getContext("2d");
+contextT.fillStyle = "red";
+contextT.beginPath();
+contextT.moveTo(0, 0);
+contextT.lineTo(5,30);
+contextT.stroke();
+
+let lineR = document.createElement('canvas');
+lineR.classList.add('r');
+lineR.height = '30';
+lineR.width = '5';
+document.querySelector('.canvas-container').appendChild(lineR);
+let canvasR = document.querySelector("canvas.r");
+let contextR = canvasR.getContext("2d");
+contextR.beginPath();
+contextR.moveTo(5, 0);
+contextR.lineTo(0,30);
+contextR.stroke();
+
+let parachute = document.querySelector('.parachute');
+let contextP = parachute.getContext('2d');
+contextP.beginPath();
+contextP.arc(10, 10, 10, 28.4, 25);
+contextP.stroke();
