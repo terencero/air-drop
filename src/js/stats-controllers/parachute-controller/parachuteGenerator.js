@@ -41,6 +41,7 @@ const parachuteGenerator = (() => {
     parachute.style.backgroundColor = 'blue';
     // parachute.style.position = 'absolute';
     payloadWrapper.style.position = 'absolute';
+    payloadWrapper.style.width = `25px`;
     // parachute.style.top = `50px`;
     payloadWrapper.style.top = `50px`;
     

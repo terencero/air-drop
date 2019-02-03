@@ -39,7 +39,7 @@ function resetParachutes() {
   let tempParachute;
   Object.keys(parachuteRefs).forEach(ref => {
     if (parachuteRefs[ref].intervalId !== `ready`){
-      tempParachute = parachuteRefs[ref].parachuteCtrl.parachute;
+      tempParachute = parachuteRefs[ref].parachuteCtrl.parachute.payloadWrapper;
       tempParachute.parentNode.removeChild(tempParachute);
     }
   });
