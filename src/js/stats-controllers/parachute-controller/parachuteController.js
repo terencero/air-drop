@@ -23,8 +23,8 @@ function createParachuteListener() {
 function deployParachute() {
   const {key = false, parachute, actions} = _findDeployableParachute();
   if (key) {
-    stats.getStats().parachutes[key].intervalId = actions.parachuteTracker({parachute: parachute}, 10);
-    document.querySelector('.air-lane').appendChild(parachute);
+    stats.getStats().parachutes[key].intervalId = actions.parachuteTracker(parachute, 10);
+    document.querySelector('.air-lane').appendChild(parachute.payloadWrapper);
   }
 };
 
@@ -72,7 +72,10 @@ function _findDeployableParachute() {
   const availableParachute = stats.getStats().parachutes[availableParachuteKey];
   return {
     key: availableParachuteKey,
-    parachute: availableParachute.parachuteCtrl.parachute,
+    parachute: {
+      payloadWrapper: availableParachute.parachuteCtrl.parachute.payloadWrapper,
+      attachCords: availableParachute.parachuteCtrl.parachute.attachCords,
+    },
     actions: {
       parachuteTracker: availableParachute.parachuteCtrl.parachuteTracker,
     }

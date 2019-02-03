@@ -1,6 +1,7 @@
 const parachuteDeployer = (() => {
-  function appendToPayload({parent, child}) {
-
+  function appendToPayload({parent, child, cord}) {
+    const paraCord = createParachuteCord({cord: {start, end}});
+    parent.appendChild(paraCord);
   };
 
   function createParachuteCord({start, end}) {
@@ -24,6 +25,10 @@ const parachuteDeployer = (() => {
     context.arc(10, 10, 10, 28.4, 25);
     context.stroke();
     return parachute;
+  }
+
+  return {
+    deployParachute: appendToPayload,
   }
 })();
 
