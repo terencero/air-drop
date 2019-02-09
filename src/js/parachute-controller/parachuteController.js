@@ -1,4 +1,4 @@
-import stats from '../statsController';
+import stats from '../stats-controllers/statsController';
 import parachuteGenerator from './parachuteGenerator';
 
 function requestParachutes() {

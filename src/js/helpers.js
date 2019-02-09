@@ -1,4 +1,4 @@
-import world from './stats-controllers/world-controller/worldController';
+import world from './world-controller/worldController';
 
 function touchDetector (parachute) {
   const sea = document.querySelector('.sea');

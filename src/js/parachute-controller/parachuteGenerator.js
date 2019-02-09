@@ -1,8 +1,8 @@
-import stats from '../statsController.js';
+import stats from '../stats-controllers/statsController.js';
 import world from '../world-controller/worldController';
 import parachuteController from './parachuteController';
 import parachuteDeployer from './parachuteDeployer';
-import {touchDetector} from '../../helpers';
+import {touchDetector} from '../helpers';
 
 const parachuteGenerator = (() => { 
   const worldHeight = document.querySelector('.layout').offsetHeight;

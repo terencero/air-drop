@@ -1,10 +1,10 @@
 const parachuteDeployer = (() => {
   function appendToPayload({parent, child, cord}) {
-    const paraCord = createParachuteCord({cord: {start, end}});
+    const paraCord = createCord({cord: {start, end}});
     parent.appendChild(paraCord);
   };
 
-  function createParachuteCord({start, end}) {
+  function createCord({start, end}) {
     let paraCord = document.createElement('canvas');
     paraCord.classList.add('para-cord');
     paraCord.width = '5';
@@ -17,7 +17,7 @@ const parachuteDeployer = (() => {
     return paraCord;
   };
 
-  function createParachute() {
+  function createCanopy() {
     let parachute = document.createElement('canvas');
     parachute.classList.add('.parachute');
     let context = parachute.getContext('2d');

@@ -1,4 +1,4 @@
-import stats from './statsController';
+import stats from '../statsController';
 
 const statsBoardController = (() => {
   function _displayPoints() {

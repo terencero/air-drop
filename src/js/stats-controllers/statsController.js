@@ -1,6 +1,5 @@
-import board from './statsBoardController';
-import world from './world-controller/worldController';
-import statsBoardController from './statsBoardController';
+import board from './stats-board/statsBoardController';
+import world from '../world-controller/worldController';
 
 const statsController = (() => {
   // TODO: just make this into an object and compose with smaller control modules?
@@ -34,7 +33,7 @@ const statsController = (() => {
 
   function _decrementParachute(payload = 1) {
     stats.parachutes-=payload;
-    statsBoardController.updateBoard();
+    boards.updateBoard();
   };
   
   function _incrementLevel() {
