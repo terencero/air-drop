@@ -1,7 +1,7 @@
 import stats from '../stats-controllers/statsController.js';
 import world from '../world-controller/worldController';
 import parachuteController from './parachuteController';
-import parachuteDeployer from './parachuteDeployer';
+import {deployCord, deployCanopy} from './parachuteDeployer';
 import {touchDetector} from '../helpers';
 
 const parachuteGenerator = (() => { 
@@ -10,6 +10,11 @@ const parachuteGenerator = (() => {
   let parachuteRefs = {};
   function createParachute() {
     // TODO: abstract this further away
+    const div = document.createElement('div');
+
+    const containers = {
+      
+    }
     const payloadWrapper = document.createElement('div');
     payloadWrapper.classList.add('payload-wrapper');
 
@@ -115,7 +120,30 @@ const parachuteGenerator = (() => {
         localTopPos+=.5
         if (!attached) {
           attached = true
-          attachCords();
+          // attachCords();
+          deployCord({
+            start: {
+              x: 0,
+              y: 0,
+            },
+            end: {
+              x: 5,
+              y: 30,
+            },
+            container: cordCanvasContainer,
+          });
+          deployCord({
+            start: {
+              x: 5,
+              y: 0,
+            },
+            end: {
+              x: 0,
+              y: 30,
+            },
+            container: cordCanvasContainer,
+          });
+          deployCanopy(canopyContainer);
         }
       } else {
         localTopPos+=1.5
