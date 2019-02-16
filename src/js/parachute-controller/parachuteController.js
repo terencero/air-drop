@@ -16,7 +16,6 @@ function createParachuteListener() {
       if (e.keyCode === 32) {
         deployParachute();
       }
-      // TODO: use an observer pattern to control airplane or gameplay in general? or use simple event emit?
     }
 };
 
@@ -39,7 +38,7 @@ function resetParachutes() {
   let tempParachute;
   Object.keys(parachuteRefs).forEach(ref => {
     if (parachuteRefs[ref].intervalId !== `ready`){
-      tempParachute = parachuteRefs[ref].parachuteCtrl.parachute.payloadWrapper;
+      tempParachute = parachuteRefs[ref].parachuteCtrl.payload.payloadWrapper;
       tempParachute.parentNode.removeChild(tempParachute);
     }
   });

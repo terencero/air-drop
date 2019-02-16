@@ -49,45 +49,10 @@ const parachuteGenerator = (() => {
       cordCanvasContainer,
       payloadContainer,
     };
-    
-    
-    function attachCords() {
-      const cordLeft = document.createElement('canvas');
-      cordLeft.classList.add('left');
-      cordLeft.height = '30';
-      cordLeft.width = '5';
-      cordCanvasContainer.appendChild(cordLeft);
-      const contextLeft = cordLeft.getContext('2d');
-      contextLeft.beginPath();
-      contextLeft.moveTo(0, 0);
-      contextLeft.lineTo(5, 30);
-      contextLeft.stroke();
-      
-      const cordRight = document.createElement('canvas');
-      cordRight.classList.add('left');
-      cordRight.height = '30';
-      cordRight.width = '5';
-      cordCanvasContainer.appendChild(cordRight);
-      const contextRight = cordRight.getContext('2d');
-      contextRight.beginPath();
-      contextRight.moveTo(5, 0);
-      contextRight.lineTo(0, 30);
-      contextRight.stroke();
-
-      const canopy = document.createElement('canvas');
-      canopy.width = '25';
-      canopy.height = '10';
-      canopyWrapper.appendChild(canopy);
-      const canopyContext = canopy.getContext('2d');
-      canopyContext.beginPath();
-      canopyContext.arc(13, 10, 10, 28.4, 25);
-      canopyContext.stroke();
-    };
 
     return {
       payload: {
         ...containers,
-        attachCords
       },
       parachuteTracker,
       stopTracker,
@@ -105,23 +70,27 @@ const parachuteGenerator = (() => {
     return parachuteInterval = setInterval(() => {
       const boundaries = payloadWrapper.getBoundingClientRect()
 
-      if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
+      if (
+        touchDetector(boundaries).type === 'sea' && 
+        touchDetector(boundaries).value === true
+        ) {
         console.log('detect sea',stats.getStats());
         parachuteController.notifyLanding({type: `sea`, intervalId: parachuteInterval});
         stopTracker(parachuteInterval);
         return false;
-      } else if (touchDetector(boundaries).type === 'island' && touchDetector(boundaries).value === true) {
+      } else if (
+        touchDetector(boundaries).type === 'island' && 
+        touchDetector(boundaries).value === true
+        ) {
         console.log('detect island', stats.getStats());
         parachuteController.notifyLanding({type: `island`, intervalId: parachuteInterval});
         stopTracker(parachuteInterval);
         return false;
       }
       if (localTopPos > worldHeight/2) {
-        // parachuteDeployer.deployParachute(/* pass in refs */)
         localTopPos+=.5
         if (!attached) {
           attached = true
-          // attachCords();
           deployCord({
             start: {
               x: 0,
