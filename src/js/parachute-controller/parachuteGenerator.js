@@ -1,7 +1,11 @@
 import stats from '../stats-controllers/statsController.js';
 import world from '../world-controller/worldController';
 import parachuteController from './parachuteController';
-import {createCord as deployCord, createCanopy as deployCanopy} from './parachuteDeployer';
+import {
+    createCord as deployCord,
+    createCanopy as deployCanopy,
+    structurePayload,
+  } from './parachutePayloadAssembler';
 import {touchDetector} from '../helpers';
 
 const parachuteGenerator = (() => { 
@@ -9,50 +13,9 @@ const parachuteGenerator = (() => {
 
   let parachuteRefs = {};
   function createParachute() {
-    // TODO: abstract this further away
-
-    const payloadWrapper = document.createElement('div');
-    payloadWrapper.classList.add('payload-wrapper');
-    payloadWrapper.style.position = 'absolute';
-    payloadWrapper.style.width = `25px`;
-    payloadWrapper.style.top = `50px`;
-
-    const canopyWrapper = document.createElement('div');
-    canopyWrapper.classList.add('canopy-wrapper');
-    payloadWrapper.appendChild(canopyWrapper);
-
-    const parachuteCordContainer = document.createElement('div');  
-    parachuteCordContainer.classList.add('parachute-cord-container');
-    payloadWrapper.appendChild(parachuteCordContainer);
-
-    const cordCanvasContainer = document.createElement('div');
-    cordCanvasContainer.classList.add('cord-canvas-container');
-    parachuteCordContainer.appendChild(cordCanvasContainer);
-
-    
-    const payloadContainer = document.createElement('div');
-    payloadContainer.classList.add('payload-container');
-    parachuteCordContainer.appendChild(payloadContainer);
-    
-
-    const supplies = document.createElement('div');
-    payloadContainer.appendChild(supplies);
-    supplies.className = 'supplies';
-    supplies.style.width = `10px`;
-    supplies.style.height = `10px`;
-    supplies.style.backgroundColor = 'blue';
-
-    const containers = { //TODO: need to expose this to any function that consumes create parachute...
-      payloadWrapper,
-      canopyWrapper,
-      parachuteCordContainer,
-      cordCanvasContainer,
-      payloadContainer,
-    };
-
     return {
       payload: {
-        ...containers,
+        ...structurePayload(),
       },
       parachuteTracker,
       stopTracker,
