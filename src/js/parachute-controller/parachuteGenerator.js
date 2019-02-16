@@ -1,7 +1,7 @@
 import stats from '../stats-controllers/statsController.js';
 import world from '../world-controller/worldController';
 import parachuteController from './parachuteController';
-import {deployCord, deployCanopy} from './parachuteDeployer';
+import {createCord as deployCord, createCanopy as deployCanopy} from './parachuteDeployer';
 import {touchDetector} from '../helpers';
 
 const parachuteGenerator = (() => { 
@@ -12,15 +12,12 @@ const parachuteGenerator = (() => {
     // TODO: abstract this further away
     const div = document.createElement('div');
 
-    const containers = {
-      
-    }
     const payloadWrapper = document.createElement('div');
     payloadWrapper.classList.add('payload-wrapper');
 
-    const canopyContainer = document.createElement('div');
-    canopyContainer.classList.add('canopy-wrapper');
-    payloadWrapper.appendChild(canopyContainer);
+    const canopyWrapper = document.createElement('div');
+    canopyWrapper.classList.add('canopy-wrapper');
+    payloadWrapper.appendChild(canopyWrapper);
 
     const parachuteCordContainer = document.createElement('div');  
     parachuteCordContainer.classList.add('parachute-cord-container');
@@ -38,6 +35,14 @@ const parachuteGenerator = (() => {
 
     let parachute = document.createElement('div');
     payloadContainer.appendChild(parachute);
+
+    const containers = { //TODO: need to expose this to any function that consumes create parachute...
+      payloadWrapper,
+      canopyWrapper,
+      parachuteCordContainer,
+      cordCanvasContainer,
+      payloadContainer,
+    };
     
     
     parachute.className = 'parachute';
@@ -76,7 +81,7 @@ const parachuteGenerator = (() => {
       const canopy = document.createElement('canvas');
       canopy.width = '25';
       canopy.height = '10';
-      canopyContainer.appendChild(canopy);
+      canopyWrapper.appendChild(canopy);
       const canopyContext = canopy.getContext('2d');
       canopyContext.beginPath();
       canopyContext.arc(13, 10, 10, 28.4, 25);
@@ -84,8 +89,8 @@ const parachuteGenerator = (() => {
     };
 
     return {
-      parachute: {
-        payloadWrapper,
+      payload: {
+        ...containers,
         attachCords
       },
       parachuteTracker,
@@ -94,15 +99,15 @@ const parachuteGenerator = (() => {
   };
 
   
-  function parachuteTracker({payloadWrapper: parachute, attachCords}, interval) {
+  function parachuteTracker({parachute: {payloadWrapper, cordCanvasContainer, canopyWrapper}, attachCords}, interval) {
     const airplane = document.querySelector('#airplane');
     let localRightPos = parseInt(airplane.style.right);
-    let localTopPos = parseInt(parachute.style.top);
+    let localTopPos = parseInt(payloadWrapper.style.top);
     let parachuteInterval;
     let attached = false;
     // TODO: set parachuteInterval to null?
     return parachuteInterval = setInterval(() => {
-      const boundaries = parachute.getBoundingClientRect()
+      const boundaries = payloadWrapper.getBoundingClientRect()
 
       if (touchDetector(boundaries).type === 'sea' && touchDetector(boundaries).value === true) {
         console.log('detect sea',stats.getStats());
@@ -143,14 +148,14 @@ const parachuteGenerator = (() => {
             },
             container: cordCanvasContainer,
           });
-          deployCanopy(canopyContainer);
+          deployCanopy({container: canopyWrapper});
         }
       } else {
         localTopPos+=1.5
       }
-      parachute.style.top = `${localTopPos}px`;
+      payloadWrapper.style.top = `${localTopPos}px`;
       localRightPos+=world.getWind();
-      parachute.style.right = `${localRightPos}px`;
+      payloadWrapper.style.right = `${localRightPos}px`;
     }, interval);
   };
 
