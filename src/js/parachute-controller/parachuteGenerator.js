@@ -133,7 +133,7 @@ const parachuteGenerator = (() => {
     let parachuteObj = {};
     for (let i = 0; i < requestValue; i++) {
       parachuteObj[i] = {
-        parachuteCtrl: createParachute(), 
+        ...createParachute(), 
         intervalId: `ready`,
       };
     }

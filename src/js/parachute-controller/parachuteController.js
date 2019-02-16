@@ -38,7 +38,7 @@ function resetParachutes() {
   let tempParachute;
   Object.keys(parachuteRefs).forEach(ref => {
     if (parachuteRefs[ref].intervalId !== `ready`){
-      tempParachute = parachuteRefs[ref].parachuteCtrl.payload.payloadWrapper;
+      tempParachute = parachuteRefs[ref].payload.payloadWrapper;
       tempParachute.parentNode.removeChild(tempParachute);
     }
   });
@@ -72,11 +72,10 @@ function _findDeployableParachute() {
   return {
     key: availableParachuteKey,
     parachute: {
-      parachute: availableParachute.parachuteCtrl.payload,
-      attachCords: availableParachute.parachuteCtrl.payload.attachCords,
+      parachute: availableParachute.payload,
     },
     actions: {
-      parachuteTracker: availableParachute.parachuteCtrl.parachuteTracker,
+      parachuteTracker: availableParachute.parachuteTracker,
     }
   }
 };
