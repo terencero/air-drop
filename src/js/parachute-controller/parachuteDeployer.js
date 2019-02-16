@@ -20,7 +20,7 @@ function createCord({start, end, container}) {
 
 function createCanopy({container}) {
   let canopy = document.createElement('canvas');
-  canopy.classList.add('.canopy');
+  canopy.classList.add('canopy');
   canopy.width = '25';
   canopy.height = '10';
   // _appendToPayload();

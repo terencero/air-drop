@@ -10,10 +10,12 @@ const parachuteGenerator = (() => {
   let parachuteRefs = {};
   function createParachute() {
     // TODO: abstract this further away
-    const div = document.createElement('div');
 
     const payloadWrapper = document.createElement('div');
     payloadWrapper.classList.add('payload-wrapper');
+    payloadWrapper.style.position = 'absolute';
+    payloadWrapper.style.width = `25px`;
+    payloadWrapper.style.top = `50px`;
 
     const canopyWrapper = document.createElement('div');
     canopyWrapper.classList.add('canopy-wrapper');
@@ -33,8 +35,12 @@ const parachuteGenerator = (() => {
     parachuteCordContainer.appendChild(payloadContainer);
     
 
-    let parachute = document.createElement('div');
-    payloadContainer.appendChild(parachute);
+    const supplies = document.createElement('div');
+    payloadContainer.appendChild(supplies);
+    supplies.className = 'supplies';
+    supplies.style.width = `10px`;
+    supplies.style.height = `10px`;
+    supplies.style.backgroundColor = 'blue';
 
     const containers = { //TODO: need to expose this to any function that consumes create parachute...
       payloadWrapper,
@@ -44,16 +50,6 @@ const parachuteGenerator = (() => {
       payloadContainer,
     };
     
-    
-    parachute.className = 'parachute';
-    parachute.style.width = `10px`;
-    parachute.style.height = `10px`;
-    parachute.style.backgroundColor = 'blue';
-    // parachute.style.position = 'absolute';
-    payloadWrapper.style.position = 'absolute';
-    payloadWrapper.style.width = `25px`;
-    // parachute.style.top = `50px`;
-    payloadWrapper.style.top = `50px`;
     
     function attachCords() {
       const cordLeft = document.createElement('canvas');
@@ -99,7 +95,7 @@ const parachuteGenerator = (() => {
   };
 
   
-  function parachuteTracker({parachute: {payloadWrapper, cordCanvasContainer, canopyWrapper}, attachCords}, interval) {
+  function parachuteTracker({parachute: {payloadWrapper, cordCanvasContainer, canopyWrapper}}, interval) {
     const airplane = document.querySelector('#airplane');
     let localRightPos = parseInt(airplane.style.right);
     let localTopPos = parseInt(payloadWrapper.style.top);
