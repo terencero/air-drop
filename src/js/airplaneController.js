@@ -7,19 +7,25 @@ const airplaneController = (() => {
   const layout = document.querySelector('.layout');
   let airplanePath;
 
+  const airplanePosition = {
+    pos: 0,
+  };
+
   function moveAirplane() {
     console.log(world.getWorld());
     parachuteController.createParachuteListener();
 
     airplanePath = setInterval(() => {
-      if (stats.getStats().pos > layout.offsetWidth) {
+      if (airplanePosition.pos > layout.offsetWidth) {
         stopTracker(airplanePath);
         const endGame = new Event('endGame');
         document.querySelector('#stats-board').dispatchEvent(endGame);
       } else {
         stats.updateStats({type: `incrementPosition`, payload: 1})
+        // stats.updateStats().incrementPosition(1);
+        airplanePosition.pos+=1
         console.log('increment')
-        airplane.style.right = `${stats.getStats().pos}px`;
+        airplane.style.right = `${airplanePosition.pos}px`;
       }
     }, 20);
   }
@@ -30,6 +36,7 @@ const airplaneController = (() => {
 
   function resetAirplane() {    
     stopTracker(airplanePath);
+    airplanePosition.pos = 0
     airplane.style.right = 0;
   }
 
