@@ -1,6 +1,7 @@
 import statsCtrl from '../statsController';
 import world from '../../world-controller/worldController';
 import board from '../stats-board/statsBoardController';
+import {scenarios} from './levelScenarios';
 
 const levelController = {
   
@@ -16,8 +17,10 @@ function handleLevelChanges() {
   function _incrementLevel() {
     stats.level+=1;
     _notifyNextLevel();
-    world.incrementWind();
-    board.displayGameMessage({message: `wind`});
+    scenarios.level2.changeWorld()
+    scenarios.level2.updateBoard({message: 'wind'});
+    // world.incrementWind();
+    // board.displayGameMessage({message: `wind`});
     // stats.updateStats({}).pos = 0;
     return true;
   };
