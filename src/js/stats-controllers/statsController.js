@@ -51,6 +51,10 @@ const statsController = (() => {
     board.displayGameMessage({message: `success`});
   };
 
+  function handleLevelChanges() {
+
+  };
+
   function getStats() {
     return stats;
   };
@@ -98,12 +102,10 @@ const statsController = (() => {
 
   return {
     getStats,
-    incrementPosition,
     checkScore,
     updateStats,
     initStatsBoard,
     resetStats,
-    resetLevel,
     resetBoardNextLevel,
   };
 })();

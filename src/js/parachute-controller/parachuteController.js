@@ -45,12 +45,10 @@ function resetParachutes() {
 };
 
 function notifyLanding({type, intervalId}) {
-  const key = Object.keys(stats.getStats().parachutes).find(ref => stats.getStats().parachutes[ref].intervalId === intervalId);
-  stats.getStats().parachutes[key].intervalId = `expired`;
-  if (_filterExpiredIntervalIds().length === 5) {
-    stats.resetLevel();
-    pauseParachutes();
-  }
+  const parachutes = stats.getStats().parachutes;
+  const key = Object.keys(parachutes).find(ref => parachutes[ref].intervalId === intervalId);
+  parachutes[key].intervalId = `expired`;
+  
   if (type === 'island') {
     // TODO: increment points, remove point logic from the parachute controller
     stats.updateStats({type: `incrementPoints`, payload: 1});
@@ -66,7 +64,7 @@ function _findDeployableParachute() {
   const keys = Object.keys(stats.getStats().parachutes);
   const availableParachuteKey = keys.find(parachute => stats.getStats().parachutes[parachute].intervalId === `ready`);
   if (availableParachuteKey === undefined) {
-    return;
+    return {};
   }
   const availableParachute = stats.getStats().parachutes[availableParachuteKey];
   return {

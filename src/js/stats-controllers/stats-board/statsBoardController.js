@@ -23,19 +23,20 @@ const statsBoardController = (() => {
     const successMessage = `Congrats! You've made it to the next level!`;
     const failureMessage = `Too bad... Maybe next time. Restart the game? Don't be a quitter!`
     const wind = `Looks like there's some mild wind.`
-    let modal = document.createElement(`div`);
-    modal.setAttribute(`class`, `message-modal`);
+    const messageBoard = document.querySelector('.message-board');
+    // let modal = document.createElement(`div`);
+    // modal.setAttribute(`class`, `message-modal`);
     
     if (message === `success`) {
-      message = document.createTextNode(successMessage);
+      messageBoard.innerHTML = successMessage;
     } else if (message === `failure`) {
-      message = document.createTextNode(failureMessage);
+      messageBoard.innerHTML = failureMessage;
     } else if (message === `wind`) {
-      message = document.createTextNode(wind);
+      messageBoard.innerHTML = wind;
       // return;
     }
-    modal.appendChild(message);
-    document.querySelector('.message-board').appendChild(modal);
+    // modal.replaceChild(message);
+    // document.querySelector('.message-board').appendChild(modal);
   }
 
   function updateBoard() {

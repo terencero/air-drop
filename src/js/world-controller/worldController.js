@@ -36,7 +36,7 @@ const worldController = (() => {
         value: randomIslandGenerator('c').getBoundingClientRect(),
       },
     }
-    const layout = document.querySelector('.layout');
+    
     return world.islands = Object.keys(islands).reduce((islandAcc, island) => {
       islandAcc[island] = islands[island].value;
       return islandAcc;

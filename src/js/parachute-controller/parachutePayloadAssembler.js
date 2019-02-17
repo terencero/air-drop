@@ -1,8 +1,3 @@
-function _appendToPayload({parent, child, cord}) {
-  const paraCord = createCord({cord: {start, end}});
-  parent.appendChild(paraCord);
-};
-
 function structurePayload() {
   const payloadWrapper = document.createElement('div');
     payloadWrapper.classList.add('payload-wrapper');
@@ -49,7 +44,6 @@ function createCord({start, end, container}) {
   paraCord.classList.add('para-cord');
   paraCord.width = '5';
   paraCord.height = '30';
-  // _appendToPayload(container);
   container.appendChild(paraCord);
   let context = paraCord.getContext('2d');
   context.beginPath();
@@ -64,7 +58,6 @@ function createCanopy({container}) {
   canopy.classList.add('canopy');
   canopy.width = '25';
   canopy.height = '10';
-  // _appendToPayload();
   container.appendChild(canopy);
   const canopyContext = canopy.getContext('2d');
   canopyContext.beginPath();

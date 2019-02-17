@@ -11,7 +11,6 @@ import {touchDetector} from '../helpers';
 const parachuteGenerator = (() => { 
   const worldHeight = document.querySelector('.layout').offsetHeight;
 
-  let parachuteRefs = {};
   function createParachute() {
     return {
       payload: {
@@ -21,7 +20,6 @@ const parachuteGenerator = (() => {
       stopTracker,
     }
   };
-
   
   function parachuteTracker({parachute: {payloadWrapper, cordCanvasContainer, canopyWrapper}}, interval) {
     const airplane = document.querySelector('#airplane');
@@ -92,7 +90,6 @@ const parachuteGenerator = (() => {
   };
   
   function generateParachutes({requestValue}) {
-    console.log('parachutes obj', parachuteRefs);
     let parachuteObj = {};
     for (let i = 0; i < requestValue; i++) {
       parachuteObj[i] = {
