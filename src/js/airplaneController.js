@@ -1,4 +1,3 @@
-import stats from './stats-controllers/statsController';
 import parachuteController from './parachute-controller/parachuteController';
 import world from './world-controller/worldController';
 
@@ -21,8 +20,6 @@ const airplaneController = (() => {
         const endGame = new Event('endGame');
         document.querySelector('#stats-board').dispatchEvent(endGame);
       } else {
-        stats.updateStats({type: `incrementPosition`, payload: 1})
-        // stats.updateStats().incrementPosition(1);
         airplanePosition.pos+=1
         console.log('increment')
         airplane.style.right = `${airplanePosition.pos}px`;
