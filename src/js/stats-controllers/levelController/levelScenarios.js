@@ -7,6 +7,10 @@ const scenarios = {
     world.incrementWind();
     board.displayGameMessage({message: levelMessage || 'wind'});
   },
+  level3: function(levelMessage) {
+    world.incrementWind();
+    
+  },
 };
 
 export {scenarios}
