@@ -17,12 +17,12 @@ function handleLevelChanges() {
   function _incrementLevel() {
     stats.level+=1;
     _notifyNextLevel();
-    scenarios.level2.changeWorld()
-    scenarios.level2.updateBoard({message: 'wind'});
-    // world.incrementWind();
-    // board.displayGameMessage({message: `wind`});
-    // stats.updateStats({}).pos = 0;
-    return true;
+    buildScenario(stats.level);
+    // return true;
+  };
+
+  function buildScenario(level) {
+    scenarios[`level${level}`]();
   };
   
   function _notifyNextLevel() {

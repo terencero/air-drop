@@ -3,9 +3,9 @@ import board from '../stats-board/statsBoardController'
 
 const scenarios = {
   level1: '',
-  level2: {
-    changeWorld: world.incrementWind,
-    updateBoard: board.displayGameMessage,
+  level2: function(levelMessage) {
+    world.incrementWind();
+    board.displayGameMessage({message: levelMessage || 'wind'});
   },
 };
 
