@@ -11,48 +11,42 @@ const statsController = (() => {
     levelIncreaseFlag: false,
     statsActions: {
       incrementPosition,
-      incrementPoints: _incrementPoints,
-      // _decrementPoints,
-      incrementLevel: _incrementLevel,
+      incrementPoints,
       decrementParachute: _decrementParachute,
       resetLevel,
     },
   };
 
-  function _checkCurrentLevel() {
-    if (!(stats.points >= 3) && stats.parachutes.length === 0) {
-     return resetLevel();
-    }
-    return (stats.points >= 3) ? _incrementLevel() : false;
-  }
-
-  function _incrementPoints(value) {
+  function incrementPoints(value) {
     stats.points+=value;
-    _checkCurrentLevel();
+    handleLevelChanges();
   };
 
   function _decrementParachute(payload = 1) {
     stats.parachutes-=payload;
     boards.updateBoard();
   };
-  
-  function _incrementLevel() {
-    stats.level+=1;
-    _notifyNextLevel();
-    world.incrementWind();
-    board.displayGameMessage({message: `wind`});
-    stats.pos = 0;
-    return true;
-  };
-  
-  function _notifyNextLevel() {
-    const nextLevel = new Event('nextLevel');
-    document.querySelector('#stats-board').dispatchEvent(nextLevel);
-    board.displayGameMessage({message: `success`});
-  };
 
   function handleLevelChanges() {
+    if (stats.points < 3 && stats.parachutes.length === 0) {
+      return resetLevel();
+    }
+    return (stats.points >= 3) ? _incrementLevel() : false;
 
+    function _incrementLevel() {
+      stats.level+=1;
+      _notifyNextLevel();
+      world.incrementWind();
+      board.displayGameMessage({message: `wind`});
+      stats.pos = 0;
+      return true;
+    };
+    
+    function _notifyNextLevel() {
+      const nextLevel = new Event('nextLevel');
+      document.querySelector('#stats-board').dispatchEvent(nextLevel);
+      board.displayGameMessage({message: `success`});
+    };
   };
 
   function getStats() {
