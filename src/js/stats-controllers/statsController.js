@@ -1,5 +1,4 @@
 import board from './stats-board/statsBoardController';
-import world from '../world-controller/worldController';
 import {handleLevelChanges} from './levelController/levelController';
 
 const statsController = (() => {
@@ -27,28 +26,6 @@ const statsController = (() => {
     stats.parachutes-=payload;
     boards.updateBoard();
   };
-
-  // function handleLevelChanges() {
-  //   if (stats.points < 3 && stats.parachutes.length === 0) {
-  //     return resetLevel();
-  //   }
-  //   return (stats.points >= 3) ? _incrementLevel() : false;
-
-  //   function _incrementLevel() {
-  //     stats.level+=1;
-  //     _notifyNextLevel();
-  //     world.incrementWind();
-  //     board.displayGameMessage({message: `wind`});
-  //     stats.pos = 0;
-  //     return true;
-  //   };
-    
-  //   function _notifyNextLevel() {
-  //     const nextLevel = new Event('nextLevel');
-  //     document.querySelector('#stats-board').dispatchEvent(nextLevel);
-  //     board.displayGameMessage({message: `success`});
-  //   };
-  // };
 
   function getStats() {
     return stats;
