@@ -16,8 +16,8 @@ const worldController = (() => {
     world.weather.wind = 0;
   }
 
-  function incrementWind() {
-    world.weather.wind-=.1;
+  function incrementWind(value) {
+    world.weather.wind-=value || .1;
   };
 
   function getWorld() {

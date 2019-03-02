@@ -22,7 +22,7 @@ function handleLevelChanges() {
   };
 
   function buildScenario(level) {
-    scenarios[`level${level}`]();
+    scenarios[`level${level}`] ? scenarios[`level${level}`]() : scenarios['level1']();
   };
   
   function _notifyNextLevel() {

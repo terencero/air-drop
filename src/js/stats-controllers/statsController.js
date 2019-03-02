@@ -46,10 +46,6 @@ const statsController = (() => {
     stats.pos+=value;
   };
 
-  function setPosition(value) {
-    stats.pos = value;
-  }
-
   function checkScore() {
     console.log('check level', stats);
     return _checkCurrentLevel();

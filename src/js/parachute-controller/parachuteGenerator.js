@@ -27,6 +27,7 @@ const parachuteGenerator = (() => {
     let localTopPos = parseInt(payloadWrapper.style.top);
     let parachuteInterval;
     let attached = false;
+    const wind = world.getWind();
     // TODO: set parachuteInterval to null?
     return parachuteInterval = setInterval(() => {
       const boundaries = payloadWrapper.getBoundingClientRect()
@@ -80,7 +81,7 @@ const parachuteGenerator = (() => {
         localTopPos+=1.5
       }
       payloadWrapper.style.top = `${localTopPos}px`;
-      localRightPos+=world.getWind();
+      localRightPos+=wind;
       payloadWrapper.style.right = `${localRightPos}px`;
     }, interval);
   };
