@@ -53,28 +53,8 @@ const parachuteGenerator = (() => {
         localTopPos+=.5
         if (!attached) {
           attached = true
-          deployCord({
-            start: {
-              x: 0,
-              y: 0,
-            },
-            end: {
-              x: 5,
-              y: 30,
-            },
-            container: cordCanvasContainer,
-          });
-          deployCord({
-            start: {
-              x: 5,
-              y: 0,
-            },
-            end: {
-              x: 0,
-              y: 30,
-            },
-            container: cordCanvasContainer,
-          });
+          deployCord({start: {x: 0,y: 0}, end: {x: 5, y: 30}, container: cordCanvasContainer});
+          deployCord({start: {x: 5, y: 0}, end: {x: 0, y: 30},container: cordCanvasContainer});
           deployCanopy({container: canopyWrapper});
         }
       } else {
