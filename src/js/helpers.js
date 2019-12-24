@@ -1,6 +1,7 @@
 import world from './world-controller/worldController';
 
 function touchDetector (parachute) {
+  // test
   const sea = document.querySelector('.sea');
   const {islands} = world.getWorld();
   
